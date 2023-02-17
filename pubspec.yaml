@@ -1,4 +1,4 @@
-name: finding_mini_game_package
+name: finding_mini_game
 description: A new Flutter package project.
 version: 0.0.1
 homepage:
@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  touchable: ^1.0.2  
 
 dev_dependencies:
   flutter_test:
