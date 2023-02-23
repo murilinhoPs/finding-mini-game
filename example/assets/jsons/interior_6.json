@@ -1,0 +1,117 @@
+{
+    "id": "game:1-1",
+    "name": "Interior 6 game",
+    "nextText": 2,
+    "clues": [],
+    "collectibles": [
+        {
+            "id": "1",
+            "content": {
+                "id": "1",
+                "type": "document",
+                "text": "breve descrição que pegou o mapa",
+                "name": "tesouro",
+                "image": "Treasure map (1x1)",
+                "description": null,
+                "audio": null
+            },
+            "x": 1547.0,
+            "y": 1167.0,
+            "image": "Treasure map (1x1)",
+            "show": true
+        },
+        {
+            "id": "2",
+            "content": {
+                "id": "2",
+                "type": "document",
+                "text": "breve descrição que pegou o quadro",
+                "name": "quadro do marco",
+                "image": "Artwork (1x1) 1",
+                "description": null,
+                "audio": null
+            },
+            "x": 1175.0,
+            "y": 625.0,
+            "image": "Artwork (1x1) 1",
+            "show": true
+        },
+        {
+            "id": "3",
+            "content": {
+                "id": "3",
+                "type": "document",
+                "text": "breve descrição que pegou o tesouro",
+                "name": "baú do tesouro",
+                "image": "Chest (1x1) 5",
+                "description": null,
+                "audio": null
+            },
+            "x": 1399.0,
+            "y": 1273.0,
+            "image": "Chest (1x1) 5",
+            "show": true
+        },
+        {
+            "id": "4",
+            "content": {
+                "id": "4",
+                "type": "document",
+                "text": "breve descrição que pegou o chapéu do arqueólogo",
+                "name": "chapéu do jorge, o arqueólogo",
+                "image": "Archeologist_s hat (1x1)",
+                "description": "Chapéu do jorge, que era o arqueólogo da região e desapareceu... sobrando apenas seu chapéu",
+                "audio": null
+            },
+            "x": 337.0,
+            "y": 1141.0,
+            "image": "Archeologist_s hat (1x1)",
+            "show": true
+        },
+        {
+            "id": "5",
+            "content": {
+                "id": "5",
+                "type": "sticker",
+                "text": "breve descrição que pegou o borgui card (moldy buns)",
+                "name": "Moldy Buns",
+                "image": "burguers_1",
+                "description": "comida - Cura 5 de HP mas o gosto é horrível"
+            },
+            "x": 29.0,
+            "y": 1495.0,
+            "image": "burguers_1",
+            "show": true
+        },
+        {
+            "id": "6",
+            "content": {
+                "id": "6",
+                "type": "sticker",
+                "text": "breve descrição que pegou os óculos ",
+                "name": "Gadgeteer's goggles",
+                "image": "goggles_1",
+                "description": "armadura - +1 de armadura, instântaneamente ganha dois corações quando aprender a usar um novo item"
+            },
+            "x": 2277.0,
+            "y": 1057.0,
+            "image": "goggles_1",
+            "show": true
+        },
+        {
+            "id": "7",
+            "content": {
+                "id": "7",
+                "type": "sticker",
+                "text": "breve descrição que pegou o braço do zumbi",
+                "name": "Turn undead",
+                "image": "undead_arm_1",
+                "description": "wisdom - para cada ponto de esforço gasto, vire 1 coração de zumbi por 1 turno"
+            },
+            "x": 2281.0,
+            "y": 155.0,
+            "image": "undead_arm_1",
+            "show": true
+        }
+    ]
+}
