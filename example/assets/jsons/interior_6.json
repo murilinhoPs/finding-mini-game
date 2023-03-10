@@ -2,7 +2,22 @@
     "id": "game:1-1",
     "name": "Interior 6 game",
     "nextText": 2,
-    "clues": [],
+    "clues": [
+        {
+            "id": "1",
+            "active": true,
+            "description": "Tem um objeto perto do banco",
+            "time": 0.0,
+            "narradorLine": null
+        },
+        {
+            "id": "2",
+            "active": false,
+            "description": "Tem um objeto próximo da saída/entrada",
+            "time": 30.0,
+            "narradorLine": "Eu não acredito que você precisa de mais uma dica... ta tão fácil"
+        }
+    ],
     "collectibles": [
         {
             "id": "1",
@@ -38,19 +53,13 @@
         },
         {
             "id": "3",
-            "content": {
-                "id": "3",
-                "type": "document",
-                "text": "breve descrição que pegou o tesouro",
-                "name": "baú do tesouro",
-                "image": "Chest (1x1) 5",
-                "description": null,
-                "audio": null
-            },
             "x": 1399.0,
             "y": 1273.0,
             "image": "Chest (1x1) 5",
-            "show": true
+            "show": true,
+            "setState": {
+                "chest": true
+            }
         },
         {
             "id": "4",
@@ -111,7 +120,10 @@
             "x": 2281.0,
             "y": 155.0,
             "image": "undead_arm_1",
-            "show": true
+            "show": false,
+            "requiredState": {
+                "chest": true
+            }
         }
     ]
 }
