@@ -1,11 +1,11 @@
-class MiniGameModel {
+class MiniGameDataModel {
   String? name;
   late String id;
   late int nextText;
   late List<Clues> clues;
-  late List<Collectible> collectibles;
+  late List<Items> collectibles;
 
-  MiniGameModel({
+  MiniGameDataModel({
     this.name,
     required this.id,
     required this.nextText,
@@ -13,7 +13,7 @@ class MiniGameModel {
     required this.collectibles,
   });
 
-  MiniGameModel.fromJson(Map<String, dynamic> json) {
+  MiniGameDataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     nextText = json['nextText'];
@@ -23,10 +23,10 @@ class MiniGameModel {
         clues.add(Clues.fromJson(v));
       });
     }
-    if (json['collectibles'] != null) {
-      collectibles = <Collectible>[];
-      json['collectibles'].forEach((v) {
-        collectibles.add(Collectible.fromJson(v));
+    if (json['items'] != null) {
+      collectibles = <Items>[];
+      json['items'].forEach((v) {
+        collectibles.add(Items.fromJson(v));
       });
     }
   }
@@ -37,7 +37,7 @@ class MiniGameModel {
     data['id'] = id;
     data['nextText'] = nextText;
     data['clues'] = clues.map((v) => v.toJson()).toList();
-    data['collectibles'] = collectibles.map((v) => v.toJson()).toList();
+    data['items'] = collectibles.map((v) => v.toJson()).toList();
     return data;
   }
 }
@@ -76,7 +76,7 @@ class Clues {
   }
 }
 
-class Collectible {
+class Items {
   late String id;
   Content? content;
   late double x;
@@ -86,7 +86,7 @@ class Collectible {
   Map<String, bool>? setState;
   Map<String, bool>? requiredState;
 
-  Collectible({
+  Items({
     required this.id,
     required this.content,
     required this.x,
@@ -97,7 +97,7 @@ class Collectible {
     this.requiredState,
   });
 
-  Collectible.fromJson(Map<String, dynamic> json) {
+  Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     content =
         json['content'] != null ? Content.fromJson(json['content']) : null;

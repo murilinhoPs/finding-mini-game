@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:finding_mini_game/src/controllers/mini_game_painter_controller.dart';
-import 'package:finding_mini_game/src/models/mini_game.dart';
+import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:flutter/material.dart';
 
 class MiniGameWidget extends StatefulWidget {
@@ -22,7 +22,7 @@ class MiniGameWidget extends StatefulWidget {
 class _MiniGameWidgetState extends State<MiniGameWidget> {
   late Map<String, ui.Image> images;
   late ui.Image background;
-  late MiniGameModel miniGame;
+  late MiniGameDataModel miniGame;
 
   final MiniGameController controller = MiniGameController();
   @override
