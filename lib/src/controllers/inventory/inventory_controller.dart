@@ -1,30 +1,42 @@
-//TODO: vai ter o estado pra exportar pro journal
-// inventario temporario, com itens tipo chave....
-// que não vão para o journal
-// states: Add tempItem add Collectible
-
-import 'package:finding_mini_game/src/models/inventory.dart';
-import 'package:finding_mini_game/src/models/mini_game.dart';
+import 'package:finding_mini_game/src/controllers/inventory/inventory_states.dart';
+import 'package:finding_mini_game/src/models/collectible.dart';
 import 'package:finding_mini_game/src/models/temporary_item.dart';
 import 'package:flutter/material.dart';
 
-class InventoryController extends ValueNotifier<InventoryModel> {
-  InventoryController()
-      : super(const InventoryModel(
-          collectibles: [],
-          tempItems: [],
-        ));
+class InventoryController extends ValueNotifier<InventoryState> {
+  InventoryController() : super(const InventoryState());
 
-  List<Collectible>? get collectibles => value.collectibles;
-  List<TemporaryItem>? get tempItems => value.tempItems;
+  InventoryStatus get status => value.status;
+  List<Collectible> get collectibles => value.inventory.collectibles;
+  List<TemporaryItem> get tempItems => value.inventory.tempItems;
 
-  void addTempItems(TemporaryItem item) {
-    value.tempItems.add(item);
+  void addTempItem(TemporaryItem item) {
+    value = value.copyWith(
+      status: InventoryStatus.itemAddSuccess,
+      inventory: value.inventory.copyWith(
+        tempItems: List.of(tempItems)..add(item),
+      ),
+    );
+    notifyListeners();
+  }
+
+  void removeTempItem(TemporaryItem item) {
+    value = value.copyWith(
+      status: InventoryStatus.itemRemoveSuccess,
+      inventory: value.inventory.copyWith(
+        tempItems: List.of(tempItems)..remove(item),
+      ),
+    );
     notifyListeners();
   }
 
   void addCollectible(Collectible collectible) {
-    value.collectibles.add(collectible);
+    value = value.copyWith(
+      status: InventoryStatus.collectibleAddSuccess,
+      inventory: value.inventory.copyWith(
+        collectibles: List.of(collectibles)..add(collectible),
+      ),
+    );
     notifyListeners();
   }
 }
