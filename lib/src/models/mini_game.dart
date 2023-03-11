@@ -6,11 +6,11 @@ class MiniGameModel {
   late List<Collectible> collectibles;
 
   MiniGameModel({
-    name,
-    required id,
-    required nextText,
-    required clues,
-    required collectibles,
+    this.name,
+    required this.id,
+    required this.nextText,
+    required this.clues,
+    required this.collectibles,
   });
 
   MiniGameModel.fromJson(Map<String, dynamic> json) {
@@ -50,11 +50,11 @@ class Clues {
   String? narradorLine;
 
   Clues({
-    time,
-    narradorLine,
-    required id,
-    required active,
-    required description,
+    this.time,
+    this.narradorLine,
+    required this.id,
+    required this.active,
+    required this.description,
   });
 
   Clues.fromJson(Map<String, dynamic> json) {
@@ -79,22 +79,22 @@ class Clues {
 class Collectible {
   late String id;
   Content? content;
-  late int x;
-  late int y;
+  late double x;
+  late double y;
   late String image;
   late bool show;
   Map<String, bool>? setState;
   Map<String, bool>? requiredState;
 
   Collectible({
-    required id,
-    required content,
-    required x,
-    required y,
-    required image,
-    required show,
-    setState,
-    requiredState,
+    required this.id,
+    required this.content,
+    required this.x,
+    required this.y,
+    required this.image,
+    required this.show,
+    this.setState,
+    this.requiredState,
   });
 
   Collectible.fromJson(Map<String, dynamic> json) {
@@ -143,13 +143,13 @@ class Content {
   String? audio;
 
   Content({
-    required id,
-    required type,
-    required text,
-    required name,
-    required image,
-    description,
-    audio,
+    required this.id,
+    required this.type,
+    required this.text,
+    required this.name,
+    required this.image,
+    this.description,
+    this.audio,
   });
 
   Content.fromJson(Map<String, dynamic> json) {
