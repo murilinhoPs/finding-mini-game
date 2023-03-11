@@ -1,6 +1,5 @@
 import 'dart:ui' as ui;
 
-import 'package:finding_mini_game/src/controllers/mini_game_painter_controller.dart';
 import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,6 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
   late ui.Image background;
   late MiniGameDataModel miniGame;
 
-  final MiniGameController controller = MiniGameController();
   @override
   Widget build(BuildContext context) {
     return Container();

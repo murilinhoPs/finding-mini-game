@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:finding_mini_game/src/controllers/mini_game_painter_controller.dart';
+import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:flutter/material.dart';
 import 'package:touchable/touchable.dart';
 
@@ -8,13 +9,13 @@ class MiniGameCanvas extends CustomPainter {
   final BuildContext context;
   final ui.Image background;
   final Map<String, ui.Image> images;
-  final MiniGameController controller;
+  final List<Items>? items;
 
   MiniGameCanvas({
     required this.context,
     required this.images,
     required this.background,
-    required this.controller,
+    required this.items,
   });
 
   @override
@@ -22,6 +23,7 @@ class MiniGameCanvas extends CustomPainter {
     var touchyCanvas = TouchyCanvas(context, canvas);
 
     drawBackground(touchyCanvas, size);
+    drawCollectibles(touchyCanvas, size);
   }
 
   void drawBackground(TouchyCanvas canvas, Size size) {
@@ -40,7 +42,7 @@ class MiniGameCanvas extends CustomPainter {
       ..color = Colors.transparent
       ..style = PaintingStyle.fill;
 
-    controller.collectibles!.map((colletible) {
+    items!.map((colletible) {
       if (!colletible.show) return;
 
       var image = images[colletible.image]!;
@@ -53,7 +55,7 @@ class MiniGameCanvas extends CustomPainter {
         paint,
         onTapDown: (details) {
           print('Tap ${colletible.content!.name}: ${details.localPosition}');
-          // showAlertDialog(colletible, context);
+          // showAlertDialog(Collectible(items.props), context);
         },
       );
     });
