@@ -3,7 +3,7 @@ class MiniGameDataModel {
   late String id;
   late int nextText;
   late List<Clues> clues;
-  late List<Items> collectibles;
+  late List<Item> collectibles;
 
   MiniGameDataModel({
     this.name,
@@ -24,9 +24,9 @@ class MiniGameDataModel {
       });
     }
     if (json['items'] != null) {
-      collectibles = <Items>[];
+      collectibles = <Item>[];
       json['items'].forEach((v) {
-        collectibles.add(Items.fromJson(v));
+        collectibles.add(Item.fromJson(v));
       });
     }
   }
@@ -76,7 +76,7 @@ class Clues {
   }
 }
 
-class Items {
+class Item {
   late String id;
   Content? content;
   late double x;
@@ -86,7 +86,7 @@ class Items {
   Map<String, bool>? setState;
   Map<String, bool>? requiredState;
 
-  Items({
+  Item({
     required this.id,
     required this.content,
     required this.x,
@@ -97,7 +97,7 @@ class Items {
     this.requiredState,
   });
 
-  Items.fromJson(Map<String, dynamic> json) {
+  Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     content =
         json['content'] != null ? Content.fromJson(json['content']) : null;
