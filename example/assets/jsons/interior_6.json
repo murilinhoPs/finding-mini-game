@@ -120,7 +120,7 @@
             "x": 2281.0,
             "y": 155.0,
             "image": "undead_arm_1",
-            "show": false,
+            "show": true,
             "requiredState": {
                 "chest": true
             }
