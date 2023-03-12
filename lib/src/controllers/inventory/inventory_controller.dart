@@ -53,11 +53,14 @@ class InventoryController extends ValueNotifier<InventoryState> {
     for (var i = 0; i < item.setState.length; i++) {
       if (remove) {
         if (!keyItemsState.contains(itemStates[i])) return;
-        keyItemsState.removeWhere((state) => state == itemStates[i]);
+        value = value.copyWith(
+            keyItemsState: List.of(keyItemsState)
+              ..removeWhere((state) => state == itemStates[i]));
         return;
       }
       if (keyItemsState.contains(itemStates[i])) return;
-      keyItemsState.add(itemStates[i]);
+      value = value.copyWith(
+          keyItemsState: List.of(keyItemsState)..add(itemStates[i]));
     }
   }
 
