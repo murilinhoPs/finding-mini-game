@@ -9,11 +9,10 @@ class InventoryController extends ValueNotifier<InventoryState> {
   InventoryStatus get status => value.status;
   List<Collectible> get collectibles => value.inventory.collectibles;
   List<TemporaryItem> get tempItems => value.inventory.tempItems;
-  List<String> get keyItemsState => value.keyItemsState;
+  List<String> get keyItems => value.keyItems;
 
   void addTempItem(TemporaryItem item) {
-    setKeyItemsState(item);
-
+    if (!updateKeyItems(item)) return;
     value = value.copyWith(
       status: InventoryStatus.itemAddSuccess,
       inventory: value.inventory.copyWith(
@@ -24,15 +23,13 @@ class InventoryController extends ValueNotifier<InventoryState> {
   }
 
   void removeTempItem(TemporaryItem item) {
-    setKeyItemsState(item, remove: true);
-
+    if (!updateKeyItems(item, remove: true)) return;
     value = value.copyWith(
       status: InventoryStatus.itemRemoveSuccess,
       inventory: value.inventory.copyWith(
         tempItems: List.of(tempItems)..remove(item),
       ),
     );
-    notifyListeners();
   }
 
   void addCollectible(Collectible collectible) {
@@ -44,33 +41,45 @@ class InventoryController extends ValueNotifier<InventoryState> {
         ),
       );
       notifyListeners();
+      return;
     }
+    value = value.copyWith(
+      status: InventoryStatus.collectibleAddFailure,
+    );
   }
 
-  void setKeyItemsState(TemporaryItem item, {bool remove = false}) {
+  bool updateKeyItems(TemporaryItem item, {bool remove = false}) {
     final itemStates = item.setState.keys.toList();
-
     for (var i = 0; i < item.setState.length; i++) {
       if (remove) {
-        if (!keyItemsState.contains(itemStates[i])) return;
+        if (!keyItems.contains(itemStates[i])) {
+          value = value.copyWith(
+            status: InventoryStatus.itemUpdateFailure,
+          );
+          return false;
+        }
         value = value.copyWith(
-            keyItemsState: List.of(keyItemsState)
+            keyItems: List.of(keyItems)
               ..removeWhere((state) => state == itemStates[i]));
-        return;
+        return true;
       }
-      if (keyItemsState.contains(itemStates[i])) return;
-      value = value.copyWith(
-          keyItemsState: List.of(keyItemsState)..add(itemStates[i]));
+
+      if (keyItems.contains(itemStates[i])) {
+        value = value.copyWith(
+          status: InventoryStatus.itemUpdateFailure,
+        );
+        return false;
+      }
+      value = value.copyWith(keyItems: List.of(keyItems)..add(itemStates[i]));
+      return true;
     }
+    return false;
   }
 
   bool requiredStateExists(Collectible collectible) {
     final requiredStateKeys = collectible.requiredState?.keys.toList() ?? [];
     return requiredStateKeys.every(
-      (state) {
-        print('contains? ${keyItemsState.contains(state)}');
-        return keyItemsState.contains(state);
-      },
+      (state) => keyItems.contains(state),
     );
   }
 }

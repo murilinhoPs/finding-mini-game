@@ -5,18 +5,20 @@ import 'package:finding_mini_game/src/models/temporary_item.dart';
 enum InventoryStatus {
   initial,
   collectibleAddSuccess,
+  collectibleAddFailure,
   itemAddSuccess,
-  itemRemoveSuccess
+  itemRemoveSuccess,
+  itemUpdateFailure,
 }
 
 class InventoryState {
   final InventoryStatus status;
-  final List<String> keyItemsState;
+  final List<String> keyItems;
   final Inventory inventory;
 
   const InventoryState({
     this.status = InventoryStatus.initial,
-    this.keyItemsState = const <String>[],
+    this.keyItems = const <String>[],
     this.inventory = const Inventory(
       tempItems: <TemporaryItem>[],
       collectibles: <Collectible>[],
@@ -26,12 +28,12 @@ class InventoryState {
   InventoryState copyWith({
     InventoryStatus? status,
     Inventory? inventory,
-    List<String>? keyItemsState,
+    List<String>? keyItems,
   }) {
     return InventoryState(
       inventory: inventory ?? this.inventory,
       status: status ?? this.status,
-      keyItemsState: keyItemsState ?? this.keyItemsState,
+      keyItems: keyItems ?? this.keyItems,
     );
   }
 }
