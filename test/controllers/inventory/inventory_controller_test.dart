@@ -8,6 +8,11 @@ void main() {
   group('InventoryControllerTest:', () {
     late InventoryController inventoryController;
 
+    const itemWithKeyState = TemporaryItem(
+      setState: {"key": true},
+      image: 'image',
+    );
+
     const itemToAddMock = TemporaryItem(
       setState: {
         'key': true,
@@ -33,6 +38,19 @@ void main() {
         name: 'name',
         image: 'collectible1_image.png',
       ),
+      image: 'collectible1_image.png',
+    );
+
+    final collectibleWithStateMock = Collectible(
+      id: '1',
+      content: CollectibleContent(
+        id: '1:1',
+        type: 'document',
+        text: 'text',
+        name: 'name',
+        image: 'collectible1_image.png',
+      ),
+      requiredState: {"key": true},
       image: 'collectible1_image.png',
     );
 
@@ -84,6 +102,52 @@ void main() {
             inventoryController.status, InventoryStatus.collectibleAddSuccess);
         expect(inventoryController.collectibles, collectibleListMock);
       });
+
+      test(
+          'should return collectibleAddFailure state when calling addCollectible() and it has a requiredState that dont exists on keyItems and return empty list',
+          () {
+        inventoryController.addCollectible(collectibleWithStateMock);
+
+        expect(
+            inventoryController.status, InventoryStatus.collectibleAddFailure);
+        expect(inventoryController.collectibles, []);
+      });
+
+      test(
+          'should return collectibleAddFailure state when calling addCollectible() and it has one requiredState that dont exists on keyItems and other that exists',
+          () {
+        inventoryController.addTempItem(itemWithKeyState);
+        inventoryController.addCollectible(Collectible(
+          id: '1',
+          content: CollectibleContent(
+            id: '1:1',
+            type: 'document',
+            text: 'text',
+            name: 'name',
+            image: 'collectible1_image.png',
+          ),
+          requiredState: {
+            "key": true,
+            "a": true,
+          },
+          image: 'collectible1_image.png',
+        ));
+
+        expect(
+            inventoryController.status, InventoryStatus.collectibleAddFailure);
+        expect(inventoryController.collectibles, []);
+      });
+
+      test(
+          'should return collectibleAddSuccess state when calling addCollectible() and it has a requiredState that exists on keyItems and return a list with one collectible',
+          () {
+        inventoryController.addTempItem(itemWithKeyState);
+        inventoryController.addCollectible(collectibleWithStateMock);
+
+        expect(
+            inventoryController.status, InventoryStatus.collectibleAddSuccess);
+        expect(inventoryController.collectibles, [collectibleWithStateMock]);
+      });
     });
 
     group('TemporaryItems tests:', () {
@@ -104,6 +168,26 @@ void main() {
 
         expect(inventoryController.status, InventoryStatus.itemAddSuccess);
         expect(inventoryController.tempItems, itemsListMock);
+      });
+
+      test(
+          'should return itemUpdateFailure state when calling addTempItem() and the keyItems already have that value',
+          () {
+        inventoryController.updateKeyItems(itemWithKeyState);
+        inventoryController.addTempItem(itemToAddMock);
+
+        expect(inventoryController.status, InventoryStatus.itemUpdateFailure);
+        expect(inventoryController.tempItems, []);
+      });
+
+      test(
+          'should return itemUpdateFailure state when calling removeTempItem() and try to remove the keyItems that dont exists',
+          () {
+        inventoryController.updateKeyItems(itemWithKeyState, remove: true);
+        inventoryController.removeTempItem(itemToAddMock);
+
+        expect(inventoryController.status, InventoryStatus.itemUpdateFailure);
+        expect(inventoryController.tempItems, []);
       });
 
       test(
