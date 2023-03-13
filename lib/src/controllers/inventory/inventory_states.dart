@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:finding_mini_game/src/models/collectible.dart';
-import 'package:finding_mini_game/src/controllers/inventory/inventory_data.dart';
+import 'package:finding_mini_game/src/controllers/inventory/inventory_entity.dart';
 import 'package:finding_mini_game/src/models/temporary_item.dart';
 
 enum InventoryStatus {
@@ -15,12 +15,12 @@ enum InventoryStatus {
 class InventoryState extends Equatable {
   final InventoryStatus status;
   final List<String> keyItems;
-  final Inventory inventory;
+  final InventoryEntity inventory;
 
   const InventoryState({
     this.status = InventoryStatus.initial,
     this.keyItems = const <String>[],
-    this.inventory = const Inventory(
+    this.inventory = const InventoryEntity(
       tempItems: <TemporaryItem>[],
       collectibles: <Collectible>[],
     ),
@@ -28,7 +28,7 @@ class InventoryState extends Equatable {
 
   InventoryState copyWith({
     InventoryStatus? status,
-    Inventory? inventory,
+    InventoryEntity? inventory,
     List<String>? keyItems,
   }) {
     return InventoryState(
