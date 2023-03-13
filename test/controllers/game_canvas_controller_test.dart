@@ -43,12 +43,44 @@ void main() {
         image: 'collectible1_image.png',
       ),
     );
+    final itemWithContentAndStateMock = Item(
+      id: '1',
+      x: 800.2,
+      y: 40.4,
+      image: 'collectible1_image.png',
+      show: true,
+      content: Content(
+        id: '1:1',
+        type: 'document',
+        text: 'text',
+        name: 'name',
+        image: 'collectible1_image.png',
+      ),
+      requiredState: {
+        'key': true,
+      },
+    );
 
     const itemToAddMock = TemporaryItem(
       setState: {
         'key': true,
       },
       image: 'item1_image.png',
+    );
+
+    const collectibleWithStateMock = Collectible(
+      id: '1',
+      content: CollectibleContent(
+        id: '1:1',
+        type: 'document',
+        text: 'text',
+        name: 'name',
+        image: 'collectible1_image.png',
+      ),
+      image: 'collectible1_image.png',
+      requiredState: {
+        'key': true,
+      },
     );
 
     const collectibleMock = Collectible(
@@ -69,11 +101,11 @@ void main() {
     });
 
     test(
-        'should return GameCanvasStatus.error when there is an error bc content and setState are null',
+        'should return GameCanvasStatus.itemCreatedFailure when there is an error bc content and setState are null',
         () {
       final status = canvasController.onCanvasItemClick(itemWithError);
 
-      expect(status, GameCanvasStatus.error);
+      expect(status, GameCanvasStatus.itemCreatedFailure);
     });
 
     test(
@@ -93,6 +125,27 @@ void main() {
 
       expect(status, GameCanvasStatus.collectibleCreatedSuccess);
       expect(inventoryController.collectibles, [collectibleMock]);
+    });
+
+    test(
+        'should return GameCanvasStatus.collectibleCreatedFailure when tap on item that has a requiredState that dont exists yet',
+        () {
+      final status =
+          canvasController.onCanvasItemClick(itemWithContentAndStateMock);
+
+      expect(status, GameCanvasStatus.collectibleCreatedFailure);
+      expect(inventoryController.collectibles, []);
+    });
+
+    test(
+        'should return GameCanvasStatus.collectibleCreatedFailure when tap on item with a valid requiredState',
+        () {
+      inventoryController.addTempItem(itemToAddMock);
+      final status =
+          canvasController.onCanvasItemClick(itemWithContentAndStateMock);
+
+      expect(status, GameCanvasStatus.collectibleCreatedSuccess);
+      expect(inventoryController.collectibles, [collectibleWithStateMock]);
     });
   });
 }
