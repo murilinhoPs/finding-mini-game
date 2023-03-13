@@ -5,31 +5,56 @@ import 'package:finding_mini_game/src/models/temporary_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('InventoryControllerTest:', () {
-    late InventoryController inventoryController;
+  late InventoryController inventoryController;
 
-    const itemWithKeyState = TemporaryItem(
-      setState: {"key": true},
-      image: 'image',
-    );
+  const itemWithKeyState = TemporaryItem(
+    setState: {"key": true},
+    image: 'image',
+  );
 
-    const itemToAddMock = TemporaryItem(
+  const itemToAddMock = TemporaryItem(
+    setState: {
+      'key': true,
+    },
+    image: 'item1_image.png',
+  );
+  const itemsListMock = [
+    TemporaryItem(
       setState: {
-        'key': true,
+        'código': true,
       },
-      image: 'item1_image.png',
-    );
-    const itemsListMock = [
-      TemporaryItem(
-        setState: {
-          'código': true,
-        },
-        image: 'item2_image.png',
-      ),
-      itemToAddMock,
-    ];
+      image: 'item2_image.png',
+    ),
+    itemToAddMock,
+  ];
 
-    const collectibleMock = Collectible(
+  const collectibleMock = Collectible(
+    id: '1',
+    content: CollectibleContent(
+      id: '1:1',
+      type: 'document',
+      text: 'text',
+      name: 'name',
+      image: 'collectible1_image.png',
+    ),
+    image: 'collectible1_image.png',
+  );
+
+  const collectibleWithStateMock = Collectible(
+    id: '1',
+    content: CollectibleContent(
+      id: '1:1',
+      type: 'document',
+      text: 'text',
+      name: 'name',
+      image: 'collectible1_image.png',
+    ),
+    requiredState: {"key": true},
+    image: 'collectible1_image.png',
+  );
+
+  const collectibleListMock = [
+    Collectible(
       id: '1',
       content: CollectibleContent(
         id: '1:1',
@@ -39,36 +64,11 @@ void main() {
         image: 'collectible1_image.png',
       ),
       image: 'collectible1_image.png',
-    );
+    ),
+    collectibleMock,
+  ];
 
-    const collectibleWithStateMock = Collectible(
-      id: '1',
-      content: CollectibleContent(
-        id: '1:1',
-        type: 'document',
-        text: 'text',
-        name: 'name',
-        image: 'collectible1_image.png',
-      ),
-      requiredState: {"key": true},
-      image: 'collectible1_image.png',
-    );
-
-    const collectibleListMock = [
-      Collectible(
-        id: '1',
-        content: CollectibleContent(
-          id: '1:1',
-          type: 'document',
-          text: 'text',
-          name: 'name',
-          image: 'collectible1_image.png',
-        ),
-        image: 'collectible1_image.png',
-      ),
-      collectibleMock,
-    ];
-
+  group('InventoryControllerTest:', () {
     setUp(() {
       inventoryController = InventoryController();
     });
@@ -117,7 +117,7 @@ void main() {
           'should return collectibleAddFailure state when calling addCollectible() and it has one requiredState that dont exists on keyItems and other that exists',
           () {
         inventoryController.addTempItem(itemWithKeyState);
-        inventoryController.addCollectible(Collectible(
+        inventoryController.addCollectible(const Collectible(
           id: '1',
           content: CollectibleContent(
             id: '1:1',
