@@ -78,21 +78,21 @@ class Clues {
 
 class Item {
   late String id;
-  Content? content;
   late double x;
   late double y;
   late String image;
   late bool show;
+  Content? content;
   Map<String, bool>? setState;
   Map<String, bool>? requiredState;
 
   Item({
     required this.id,
-    required this.content,
     required this.x,
     required this.y,
     required this.image,
     required this.show,
+    this.content,
     this.setState,
     this.requiredState,
   });

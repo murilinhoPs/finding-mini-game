@@ -29,7 +29,7 @@ void main() {
       itemToAddMock,
     ];
 
-    final collectibleMock = Collectible(
+    const collectibleMock = Collectible(
       id: '1',
       content: CollectibleContent(
         id: '1:1',
@@ -41,7 +41,7 @@ void main() {
       image: 'collectible1_image.png',
     );
 
-    final collectibleWithStateMock = Collectible(
+    const collectibleWithStateMock = Collectible(
       id: '1',
       content: CollectibleContent(
         id: '1:1',
@@ -54,7 +54,7 @@ void main() {
       image: 'collectible1_image.png',
     );
 
-    final collectibleListMock = [
+    const collectibleListMock = [
       Collectible(
         id: '1',
         content: CollectibleContent(

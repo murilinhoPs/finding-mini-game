@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:finding_mini_game/src/models/collectible.dart';
 import 'package:finding_mini_game/src/models/temporary_item.dart';
 
-class Inventory {
+class Inventory extends Equatable {
   final List<Collectible> collectibles;
   final List<TemporaryItem> tempItems;
 
@@ -19,4 +20,7 @@ class Inventory {
       tempItems: tempItems ?? this.tempItems,
     );
   }
+
+  @override
+  List<Object?> get props => [collectibles, tempItems];
 }

@@ -1,27 +1,32 @@
-class Collectible {
-  late String id;
-  CollectibleContent? content;
-  late String image;
-  Map<String, bool>? requiredState;
+import 'package:equatable/equatable.dart';
 
-  Collectible({
+class Collectible extends Equatable {
+  final String id;
+  final CollectibleContent? content;
+  final String image;
+  final Map<String, bool>? requiredState;
+
+  const Collectible({
     required this.id,
     required this.content,
     required this.image,
     this.requiredState,
   });
+
+  @override
+  List<Object?> get props => [id, content, image, requiredState];
 }
 
-class CollectibleContent {
-  late String id;
-  late String type;
-  late String text;
-  late String name;
-  late String image;
-  String? description;
-  String? audio;
+class CollectibleContent extends Equatable {
+  final String id;
+  final String type;
+  final String text;
+  final String name;
+  final String image;
+  final String? audio;
+  final String? description;
 
-  CollectibleContent({
+  const CollectibleContent({
     required this.id,
     required this.type,
     required this.text,
@@ -30,4 +35,15 @@ class CollectibleContent {
     this.description,
     this.audio,
   });
+
+  @override
+  List<Object?> get props => [
+        id,
+        type,
+        text,
+        name,
+        image,
+        audio,
+        description,
+      ];
 }
