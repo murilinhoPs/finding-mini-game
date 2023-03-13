@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:finding_mini_game/src/controllers/game_canvas_controller.dart';
+import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
 import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:flutter/material.dart';
 import 'package:touchable/touchable.dart';
