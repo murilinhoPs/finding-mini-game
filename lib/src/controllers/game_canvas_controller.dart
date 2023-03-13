@@ -3,16 +3,21 @@ import 'package:finding_mini_game/src/models/collectible.dart';
 import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:finding_mini_game/src/models/temporary_item.dart';
 
+enum GameCanvasStatus { itemCreatedSuccess, collectibleCreatedSuccess, error }
+
 class GameCanvasController {
   const GameCanvasController(this.inventoryController);
   final InventoryController inventoryController;
 
-  void onCanvasItemClick(Item item) {
+  GameCanvasStatus onCanvasItemClick(Item item) {
     if (item.content == null) {
+      //TODO: react -> typeOf keyItem ou collectible
+      if (item.setState == null) return GameCanvasStatus.error;
+
       final tempItem =
           TemporaryItem(setState: item.setState!, image: item.image);
       inventoryController.addTempItem(tempItem);
-      return;
+      return GameCanvasStatus.itemCreatedSuccess;
     }
 
     final collectible = Collectible(
@@ -25,7 +30,9 @@ class GameCanvasController {
         name: item.content!.name,
         image: item.content!.image,
       ),
+      requiredState: item.requiredState,
     );
     inventoryController.addCollectible(collectible);
+    return GameCanvasStatus.collectibleCreatedSuccess;
   }
 }
