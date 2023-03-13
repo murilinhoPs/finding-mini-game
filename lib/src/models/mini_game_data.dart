@@ -2,7 +2,7 @@ class MiniGameDataModel {
   String? name;
   late String id;
   late int nextText;
-  late List<Clues> clues;
+  late List<CluesData> clues;
   late List<Item> collectibles;
 
   MiniGameDataModel({
@@ -18,9 +18,9 @@ class MiniGameDataModel {
     name = json['name'];
     nextText = json['nextText'];
     if (json['clues'] != null) {
-      clues = <Clues>[];
+      clues = <CluesData>[];
       json['clues'].forEach((v) {
-        clues.add(Clues.fromJson(v));
+        clues.add(CluesData.fromJson(v));
       });
     }
     if (json['items'] != null) {
@@ -42,22 +42,22 @@ class MiniGameDataModel {
   }
 }
 
-class Clues {
+class CluesData {
   late String id;
   late bool active;
   late String description;
-  int? time;
+  late double time;
   String? narradorLine;
 
-  Clues({
-    this.time,
+  CluesData({
     this.narradorLine,
+    required this.time,
     required this.id,
     required this.active,
     required this.description,
   });
 
-  Clues.fromJson(Map<String, dynamic> json) {
+  CluesData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     active = json['active'];
     description = json['description'];
@@ -70,7 +70,7 @@ class Clues {
     data['id'] = id;
     data['active'] = active;
     data['description'] = description;
-    if (time != null) data['time'] = time;
+    data['time'] = time;
     if (narradorLine != null) data['narradorLine'] = narradorLine;
     return data;
   }
