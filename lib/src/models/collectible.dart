@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Collectible extends Equatable {
   final String id;
-  final CollectibleContent? content;
+  final CollectibleContent content;
   final String image;
   final Map<String, bool>? requiredState;
 
