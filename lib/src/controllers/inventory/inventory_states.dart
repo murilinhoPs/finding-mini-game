@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:finding_mini_game/src/models/collectible.dart';
-import 'package:finding_mini_game/src/models/inventory.dart';
+import 'package:finding_mini_game/src/controllers/inventory/inventory_data.dart';
 import 'package:finding_mini_game/src/models/temporary_item.dart';
 
 enum InventoryStatus {
