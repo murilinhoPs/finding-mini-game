@@ -46,7 +46,7 @@ class CluesData {
   late String id;
   late bool active;
   late String description;
-  late double time;
+  late int time;
   String? narradorLine;
 
   CluesData({

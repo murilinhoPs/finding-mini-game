@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Clues extends Equatable {
   final String id;
-  final double time;
+  final int time;
   final bool active;
   final String description;
   final String? narradorLine;
