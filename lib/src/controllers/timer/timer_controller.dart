@@ -32,7 +32,7 @@ class TimerController extends ValueNotifier<TimerState> {
   void timerTicked(int duration) {
     if (duration < cluesController.cluesTimeCount) {
       value = TimerRunInProgress(duration);
-      // cluesController.checkAvailibleClue(duration);
+      cluesController.checkAvailibleClue(duration);
       notifyListeners();
       return;
     }
