@@ -15,6 +15,10 @@ class GameManagerLevelComplete extends GameManagerState {
   const GameManagerLevelComplete();
 }
 
+class GameManagerLevelIncomplete extends GameManagerState {
+  const GameManagerLevelIncomplete();
+}
+
 class GameManagerLevelExit extends GameManagerState {
   const GameManagerLevelExit();
 }
