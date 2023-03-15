@@ -10,6 +10,8 @@ class GameManagerController extends ValueNotifier<GameManagerState> {
   final int inventoryMaxCapacity;
   final InventoryController inventoryController;
 
+  GameManagerState get state => value;
+
   void gameCompleted() {
     if (inventoryController.collectibles.length == inventoryMaxCapacity) {
       value = const GameManagerLevelComplete();
