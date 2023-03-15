@@ -68,9 +68,15 @@ void main() {
     collectibleMock,
   ];
 
+  bool callCheckInventoryCapacity = false;
+
   group('InventoryControllerTest:', () {
     setUp(() {
-      inventoryController = InventoryController();
+      inventoryController = InventoryController(
+        checkInventoryCapacity: (() {
+          callCheckInventoryCapacity = true;
+        }),
+      );
     });
 
     test(
@@ -87,6 +93,7 @@ void main() {
           () {
         inventoryController.addCollectible(collectibleMock);
 
+        expect(callCheckInventoryCapacity, true);
         expect(
             inventoryController.status, InventoryStatus.collectibleAddSuccess);
         expect(inventoryController.collectibles, [collectibleMock]);

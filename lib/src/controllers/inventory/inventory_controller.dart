@@ -22,7 +22,6 @@ class InventoryController extends ValueNotifier<InventoryState> {
         tempItems: List.of(tempItems)..add(item),
       ),
     );
-    checkInventoryCapacity(); //gameManager.gameCompleted()
     notifyListeners();
   }
 
@@ -44,6 +43,7 @@ class InventoryController extends ValueNotifier<InventoryState> {
           collectibles: List.of(collectibles)..add(collectible),
         ),
       );
+      checkInventoryCapacity(); //gameManager.gameCompleted()
       notifyListeners();
       return;
     }

@@ -97,7 +97,9 @@ void main() {
 
   group('CanvasControllerTest: ', () {
     setUp(() {
-      inventoryController = InventoryController();
+      inventoryController = InventoryController(
+        checkInventoryCapacity: (() {}),
+      );
       canvasController = GameCanvasController(inventoryController);
     });
 
