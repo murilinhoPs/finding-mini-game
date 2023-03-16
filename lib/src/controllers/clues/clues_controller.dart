@@ -23,7 +23,7 @@ class CluesController extends ValueNotifier<CluesStates> {
         ),
       ),
     );
-    value.copyWith(
+    value = value.copyWith(
       status: CluesStatus.cluesCreatedSuccess,
       cluesTimeCount: clues.last.time + 1,
     );
@@ -32,14 +32,14 @@ class CluesController extends ValueNotifier<CluesStates> {
 
   void onClueTap(int clueIndex) {
     if (clues[clueIndex].active) {
-      value.copyWith(
+      value = value.copyWith(
         status: CluesStatus.cluesShow,
         currentClueIndex: clueIndex,
       );
       notifyListeners();
       return;
     }
-    value.copyWith(
+    value = value.copyWith(
       status: CluesStatus.cluesHide,
       currentClueIndex: clueIndex,
     );
@@ -53,7 +53,7 @@ class CluesController extends ValueNotifier<CluesStates> {
         final updatedClue = clues[index].copyWith(
           active: true,
         );
-        value.copyWith(
+        value = value.copyWith(
           status: CluesStatus.cluesAvailable,
           clues: List.of(clues)..replaceRange(index, index + 1, [updatedClue]),
         );
