@@ -24,26 +24,23 @@ class TimerController extends ValueNotifier<TimerState> {
   void startTimer(int duration) {
     value = TimerRunInProgress(duration);
     tickerSubscription?.cancel();
-    tickerSubscription = ticker
-        .tick(maxTicks: cluesController.cluesTimeCount)
-        .listen((duration) => timerTicked(duration));
+    tickerSubscription =
+        ticker.tick().listen((duration) => timerTicked(duration));
   }
 
   void timerTicked(int duration) {
     if (duration < cluesController.cluesTimeCount) {
       value = TimerRunInProgress(duration);
       cluesController.checkAvailibleClue(duration);
-      notifyListeners();
       return;
     }
     value = const TimerRunComplete();
     tickerSubscription?.cancel();
-    notifyListeners();
   }
 
   void timerReset() {
     tickerSubscription?.cancel();
-    value = const TimerInitial(0);
+    startTimer(0);
   }
 
   void timerPaused() {
@@ -51,7 +48,6 @@ class TimerController extends ValueNotifier<TimerState> {
       tickerSubscription?.pause();
       final newValue = TimerRunPause(value.duration);
       value = newValue;
-      notifyListeners();
     }
   }
 
@@ -60,7 +56,6 @@ class TimerController extends ValueNotifier<TimerState> {
       tickerSubscription?.resume();
       final newValue = TimerRunInProgress(value.duration);
       value = newValue;
-      notifyListeners();
     }
   }
 }
