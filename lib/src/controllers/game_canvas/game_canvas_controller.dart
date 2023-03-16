@@ -7,9 +7,12 @@ import 'package:finding_mini_game/src/models/temporary_item.dart';
 import 'package:flutter/material.dart';
 
 class GameCanvasController extends ValueNotifier<GameCanvasState> {
-  GameCanvasController(this.inventoryController)
-      : super(const GameCanvasInitial());
+  GameCanvasController(
+    this.inventoryController, {
+    this.itemClickFeedback,
+  }) : super(const GameCanvasInitial());
   final InventoryController inventoryController;
+  final VoidCallback? itemClickFeedback;
 
   GameCanvasState get state => value;
 
