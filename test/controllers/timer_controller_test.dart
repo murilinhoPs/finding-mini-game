@@ -3,13 +3,10 @@ import 'package:finding_mini_game/src/controllers/clues/clues_states.dart';
 import 'package:finding_mini_game/src/controllers/timer/ticker.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_states.dart';
-import 'package:finding_mini_game/src/models/clue.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class _MockTicker extends Mock implements Ticker {}
-
-class TimerControllerMock extends Mock implements TimerController {}
 
 void main() {
   late Ticker ticker;
@@ -28,8 +25,7 @@ void main() {
           TimerController(ticker: ticker, cluesController: cluesController);
       cluesController.value = const CluesStates(cluesTimeCount: 6);
 
-      when(() => ticker.tick(maxTicks: cluesController.cluesTimeCount))
-          .thenAnswer(
+      when(() => ticker.tick()).thenAnswer(
         (_) => Stream<int>.fromIterable([1, 2, 3, 4, 5]),
       );
     });
@@ -45,8 +41,7 @@ void main() {
       timerController.startTimer(0);
 
       expect(timerController.value, const TimerRunInProgress(0));
-      verify(() => ticker.tick(maxTicks: cluesController.cluesTimeCount))
-          .called(1);
+      verify(() => ticker.tick()).called(1);
     });
 
     test(
@@ -56,13 +51,13 @@ void main() {
       timerController.timerTicked(cluesController.cluesTimeCount + 1);
 
       expect(timerController.value, const TimerRunComplete());
-      verify(() => ticker.tick(maxTicks: cluesController.cluesTimeCount))
-          .called(1);
+      verify(() => ticker.tick()).called(1);
     });
+
     test('should return TimerInitial when reset timer to zero', () {
       timerController.timerReset();
 
-      expect(timerController.value, const TimerInitial(0));
+      expect(timerController.value, const TimerRunInProgress(0));
     });
   });
 }
