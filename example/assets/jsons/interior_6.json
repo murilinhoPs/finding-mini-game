@@ -7,14 +7,14 @@
             "id": "1",
             "active": true,
             "description": "Tem um objeto perto do banco",
-            "time": 0.0,
+            "time": 0,
             "narradorLine": null
         },
         {
             "id": "2",
             "active": false,
             "description": "Tem um objeto próximo da saída/entrada",
-            "time": 30.0,
+            "time": 30,
             "narradorLine": "Eu não acredito que você precisa de mais uma dica... ta tão fácil"
         }
     ],

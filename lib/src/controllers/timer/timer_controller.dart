@@ -37,6 +37,7 @@ class TimerController extends ValueNotifier<TimerState> {
       return;
     }
     value = const TimerRunComplete();
+    tickerSubscription?.cancel();
     notifyListeners();
   }
 

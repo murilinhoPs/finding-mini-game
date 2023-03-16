@@ -15,6 +15,21 @@ class Clues extends Equatable {
     required this.description,
   });
 
+  Clues copyWith({
+    String? id,
+    int? time,
+    bool? active,
+    String? description,
+    String? narradorLine,
+  }) {
+    return Clues(
+      id: id ?? this.id,
+      time: time ?? this.time,
+      active: active ?? this.active,
+      description: description ?? this.description,
+    );
+  }
+
   @override
   List<Object?> get props => [time, id, active, description];
 }
