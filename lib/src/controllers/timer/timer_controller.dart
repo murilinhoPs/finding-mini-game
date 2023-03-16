@@ -9,7 +9,7 @@ class TimerController extends ValueNotifier<TimerState> {
   TimerController({
     required this.ticker,
     required this.cluesController,
-  }) : super(const TimerInitial(0));
+  }) : super(const TimerInitial(60));
   final Ticker ticker;
   final CluesController cluesController;
 
@@ -21,12 +21,12 @@ class TimerController extends ValueNotifier<TimerState> {
     super.dispose();
   }
 
-  void startTimer(int time) {
-    value = TimerRunInProgress(time);
+  void startTimer(int duration) {
+    value = TimerRunInProgress(duration);
     tickerSubscription?.cancel();
-    tickerSubscription =
-        ticker.tick(maxTicks: 1).listen((duration) => timerTicked(duration));
-    notifyListeners();
+    tickerSubscription = ticker
+        .tick(maxTicks: cluesController.cluesTimeCount)
+        .listen((duration) => timerTicked(duration));
   }
 
   void timerTicked(int duration) {
