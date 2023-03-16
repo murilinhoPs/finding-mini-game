@@ -21,7 +21,6 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
       //TODO: react -> typeOf keyItem ou collectible
       if (item.setState == null) {
         value = const GameCanvasItemCreatedFailure();
-        notifyListeners();
         return;
       }
 
@@ -31,7 +30,6 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
       );
       inventoryController.addTempItem(tempItem);
       value = const GameCanvasItemCreatedSuccess();
-      notifyListeners();
       return;
     }
 
@@ -50,10 +48,8 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
     inventoryController.addCollectible(collectible);
     if (inventoryController.status == InventoryStatus.collectibleAddFailure) {
       value = const GameCanvasCollectibleAddFailure();
-      notifyListeners();
       return;
     }
     value = const GameCanvasCollectibleAddSuccess();
-    notifyListeners();
   }
 }

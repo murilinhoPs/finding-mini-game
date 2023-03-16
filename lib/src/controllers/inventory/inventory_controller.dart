@@ -22,7 +22,6 @@ class InventoryController extends ValueNotifier<InventoryState> {
         tempItems: List.of(tempItems)..add(item),
       ),
     );
-    notifyListeners();
   }
 
   void removeTempItem(TemporaryItem item) {
@@ -44,7 +43,6 @@ class InventoryController extends ValueNotifier<InventoryState> {
         ),
       );
       checkInventoryCapacity(); //gameManager.gameCompleted()
-      notifyListeners();
       return;
     }
     value = value.copyWith(

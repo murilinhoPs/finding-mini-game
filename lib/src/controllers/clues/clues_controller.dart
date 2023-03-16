@@ -36,14 +36,12 @@ class CluesController extends ValueNotifier<CluesStates> {
         status: CluesStatus.cluesShow,
         currentClueIndex: clueIndex,
       );
-      notifyListeners();
       return;
     }
     value = value.copyWith(
       status: CluesStatus.cluesHide,
       currentClueIndex: clueIndex,
     );
-    notifyListeners();
   }
   //TODO:if showState, o widget vai pegar a description e mostrar o valor dela + highlight clueIndex. se clicar dnv, vai sumir -> hideState
 
@@ -57,7 +55,6 @@ class CluesController extends ValueNotifier<CluesStates> {
           status: CluesStatus.cluesAvailable,
           clues: List.of(clues)..replaceRange(index, index + 1, [updatedClue]),
         );
-        notifyListeners();
       }
     }
   }
