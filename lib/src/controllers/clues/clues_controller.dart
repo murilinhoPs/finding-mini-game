@@ -8,7 +8,8 @@ class CluesController extends ValueNotifier<CluesStates> {
 
   List<Clues> get clues => value.clues;
   CluesStatus get status => value.status;
-  int get cluesTimeCount => value.currentClueIndex;
+  int get cluesTimeCount => value.cluesTimeCount;
+  int get currentClueIndex => value.currentClueIndex;
 
   void createClues(List<CluesData> data) {
     value.clues.addAll(
@@ -22,7 +23,10 @@ class CluesController extends ValueNotifier<CluesStates> {
         ),
       ),
     );
-    value.copyWith(status: CluesStatus.cluesCreatedSuccess);
+    value.copyWith(
+      status: CluesStatus.cluesCreatedSuccess,
+      cluesTimeCount: clues.last.time + 1,
+    );
     notifyListeners(); //TODO:show cluesWidget with updatedValues
   }
 
