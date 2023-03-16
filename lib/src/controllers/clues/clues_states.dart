@@ -1,7 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:finding_mini_game/src/models/clue.dart';
 
-enum CluesStatus { initial, cluesCreatedSuccess, cluesShow, cluesHide, failure }
+enum CluesStatus {
+  initial,
+  cluesCreatedSuccess,
+  cluesAvailable,
+  cluesShow,
+  cluesHide,
+  failure
+}
 
 class CluesStates extends Equatable {
   final CluesStatus status;

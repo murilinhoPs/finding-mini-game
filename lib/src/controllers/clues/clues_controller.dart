@@ -54,6 +54,7 @@ class CluesController extends ValueNotifier<CluesStates> {
           active: true,
         );
         value.copyWith(
+          status: CluesStatus.cluesAvailable,
           clues: List.of(clues)..replaceRange(index, index + 1, [updatedClue]),
         );
         notifyListeners();
