@@ -2,14 +2,16 @@ class MiniGameDataModel {
   String? name;
   late String id;
   late int nextText;
+  late String background; //
   late List<CluesData> clues;
-  late List<Item> collectibles;
+  late List<Item> collectibles; //
 
   MiniGameDataModel({
     this.name,
     required this.id,
     required this.nextText,
     required this.clues,
+    required this.background,
     required this.collectibles,
   });
 
@@ -17,6 +19,7 @@ class MiniGameDataModel {
     id = json['id'];
     name = json['name'];
     nextText = json['nextText'];
+    background = json['background'];
     if (json['clues'] != null) {
       clues = <CluesData>[];
       json['clues'].forEach((v) {
@@ -36,6 +39,7 @@ class MiniGameDataModel {
     data['name'] = name;
     data['id'] = id;
     data['nextText'] = nextText;
+    data['background'] = background;
     data['clues'] = clues.map((v) => v.toJson()).toList();
     data['items'] = collectibles.map((v) => v.toJson()).toList();
     return data;

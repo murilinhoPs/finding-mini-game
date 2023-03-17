@@ -2,6 +2,7 @@
     "id": "game:1-1",
     "name": "Interior 6 game",
     "nextText": 2,
+    "background": "Interior 6.png",
     "clues": [
         {
             "id": "1",
