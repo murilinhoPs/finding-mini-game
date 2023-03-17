@@ -1,23 +1,14 @@
-import 'dart:ui' as ui;
-
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
-import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:flutter/material.dart';
 import 'package:touchable/touchable.dart';
 
 class MiniGameCanvas extends CustomPainter {
   final BuildContext context;
-  final ui.Image background;
-  final Map<String, ui.Image> images;
-  final List<Item>? items;
-  final GameCanvasController gameCanvasController;
+  final GameCanvasController controller;
 
   MiniGameCanvas({
     required this.context,
-    required this.images,
-    required this.background,
-    required this.items,
-    required this.gameCanvasController,
+    required this.controller,
   });
 
   @override
@@ -32,7 +23,7 @@ class MiniGameCanvas extends CustomPainter {
     final paint = Paint();
 
     canvas.drawImage(
-      background,
+      controller.background!,
       Offset.zero,
       paint,
       onTapDown: (details) => print('BabkgoundTap: ${details.localPosition}'),
@@ -44,10 +35,10 @@ class MiniGameCanvas extends CustomPainter {
       ..color = Colors.transparent
       ..style = PaintingStyle.fill;
 
-    items!.map((colletible) {
+    controller.items.map((colletible) {
       if (!colletible.show) return;
 
-      var image = images[colletible.image]!;
+      var image = controller.images[colletible.image]!;
       canvas.drawImage(
         image,
         Offset(
@@ -58,7 +49,7 @@ class MiniGameCanvas extends CustomPainter {
         onTapDown: (details) {
           print('Tap ${colletible.image}: ${details.localPosition}');
           // showAlertDialog(Collectible(items.props), context);
-          gameCanvasController.onCanvasItemClick(colletible);
+          controller.onCanvasItemClick(colletible);
         },
       );
     });

@@ -4,7 +4,9 @@ import 'package:finding_mini_game/src/controllers/inventory/inventory_controller
 import 'package:finding_mini_game/src/models/collectible.dart';
 import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:finding_mini_game/src/models/temporary_item.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'dart:ui' as ui;
 
 void main() {
   late InventoryController inventoryController;
@@ -100,7 +102,8 @@ void main() {
       inventoryController = InventoryController(
         checkInventoryCapacity: (() {}),
       );
-      canvasController = GameCanvasController(inventoryController);
+      canvasController = GameCanvasController(inventoryController,
+          background: null, images: {}, items: []);
     });
 
     test(

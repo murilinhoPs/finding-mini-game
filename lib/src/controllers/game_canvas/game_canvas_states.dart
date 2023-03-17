@@ -11,6 +11,14 @@ class GameCanvasInitial extends GameCanvasState {
   const GameCanvasInitial();
 }
 
+class GameCanvasLoading extends GameCanvasState {
+  const GameCanvasLoading();
+}
+
+class GameCanvasSuccess extends GameCanvasState {
+  const GameCanvasSuccess();
+}
+
 class GameCanvasItemCreatedSuccess extends GameCanvasState {
   const GameCanvasItemCreatedSuccess();
 }
