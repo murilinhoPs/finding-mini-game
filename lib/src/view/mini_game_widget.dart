@@ -7,19 +7,18 @@ import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_states.dart';
 import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MiniGameWidget extends StatefulWidget {
-  const MiniGameWidget({Key? key}) : super(key: key);
-
-  // final String imagePath;
-  // final String miniGameJsonpath;
-  // final List<String>? imagesPath;
-  // const MiniGameWidget({
-  //   Key? key,
-  //   required this.imagePath,
-  //   required this.imagesPath,
-  //   required this.miniGameJsonpath,
-  // }) : super(key: key);
+  final String backgroundPath;
+  final String miniGameJsonpath;
+  final List<String>? imagesPath;
+  const MiniGameWidget({
+    Key? key,
+    required this.backgroundPath,
+    required this.imagesPath,
+    required this.miniGameJsonpath,
+  }) : super(key: key);
 
   @override
   State<MiniGameWidget> createState() => _MiniGameWidgetState();
@@ -35,10 +34,14 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+
     cluesController.value = const CluesStates(cluesTimeCount: 16);
     timerController = TimerController(
         ticker: const Ticker(), cluesController: cluesController);
-
     super.initState();
   }
 
@@ -97,5 +100,16 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
         );
       },
     );
+  }
+
+  @override
+  dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
   }
 }
