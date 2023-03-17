@@ -10,10 +10,11 @@ class CluesController extends ValueNotifier<CluesStates> {
   CluesStatus get status => value.status;
   int get cluesTimeCount => value.cluesTimeCount;
   int get currentClueIndex => value.currentClueIndex;
+  String? get narradorLine => value.narradorLine;
 
   void createClues(List<CluesData> data) {
-    value.clues.addAll(
-      data.map(
+    final createdClues = [
+      ...data.map(
         (clue) => Clues(
           id: clue.id,
           time: clue.time,
@@ -21,33 +22,58 @@ class CluesController extends ValueNotifier<CluesStates> {
           description: clue.description,
           narradorLine: clue.narradorLine,
         ),
-      ),
-    );
-    value = value.copyWith(
+      )
+    ];
+
+    value = CluesStates(
       status: CluesStatus.cluesCreatedSuccess,
-      cluesTimeCount: clues.last.time + 1,
+      cluesTimeCount: createdClues.last.time + 1,
+      clues: createdClues,
     );
-    notifyListeners(); //TODO:show cluesWidget with updatedValues
+    //TODO:show cluesWidget with updatedValues
   }
 
   void onClueTap(int clueIndex) {
-    if (clues[clueIndex].active) {
+    final currentClue = clues[clueIndex];
+
+    if (!currentClue.active) {
+      value = value.copyWith(
+        status: CluesStatus.clueNotActive,
+      );
+      return;
+    }
+    if (status != CluesStatus.cluesShow) {
       value = value.copyWith(
         status: CluesStatus.cluesShow,
         currentClueIndex: clueIndex,
       );
       return;
     }
+    if (currentClue.narradorLine == null ||
+        narradorLine == currentClue.narradorLine) {
+      value = value.copyWith(
+        status: CluesStatus.cluesHide,
+        currentClueIndex: clueIndex,
+      );
+      return;
+    }
+    value = value.copyWith(
+      status: CluesStatus.cluesNarradorLineShow,
+      narradorLine: currentClue.narradorLine,
+      currentClueIndex: clueIndex,
+    );
+  } //TODO:if showState, o widget vai pegar a description e mostrar o valor dela + highlight clueIndex. se clicar dnv, vai sumir -> hideState
+
+  void closeClue(int clueIndex) {
     value = value.copyWith(
       status: CluesStatus.cluesHide,
       currentClueIndex: clueIndex,
     );
   }
-  //TODO:if showState, o widget vai pegar a description e mostrar o valor dela + highlight clueIndex. se clicar dnv, vai sumir -> hideState
 
   void checkAvailibleClue(int duration) {
     for (var index = 0; index < clues.length; index++) {
-      if (clues[index].time >= duration) {
+      if (clues[index].time <= duration) {
         final updatedClue = clues[index].copyWith(
           active: true,
         );
