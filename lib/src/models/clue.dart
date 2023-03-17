@@ -27,9 +27,10 @@ class Clues extends Equatable {
       time: time ?? this.time,
       active: active ?? this.active,
       description: description ?? this.description,
+      narradorLine: narradorLine ?? this.narradorLine,
     );
   }
 
   @override
-  List<Object?> get props => [time, id, active, description];
+  List<Object?> get props => [time, id, active, description, narradorLine];
 }
