@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MiniGameWidget(
+      home: const AppWidget(
         backgroundPath: 'assets/backgrounds/Interior 6.png',
-        miniGameJsonpath: 'assets/jsons/interior_6.json',
+        jsonPath: 'assets/jsons/interior_6.json',
       ),
     );
   }
