@@ -102,8 +102,11 @@ void main() {
       inventoryController = InventoryController(
         checkInventoryCapacity: (() {}),
       );
-      canvasController = GameCanvasController(inventoryController,
-          background: null, images: {}, items: []);
+      canvasController = GameCanvasController(
+        inventoryController,
+        backgroundPath: '',
+        items: [],
+      );
     });
 
     test(

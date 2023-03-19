@@ -14,26 +14,18 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
   GameCanvasController(
     this.inventoryController, {
     this.itemClickFeedback,
-    required this.background,
-    required this.images,
     required this.items,
+    required this.backgroundPath,
   }) : super(const GameCanvasInitial());
   final InventoryController inventoryController;
   final VoidCallback? itemClickFeedback;
-  late ui.Image? background;
-  late Map<String, ui.Image> images;
-  late List<Item> items;
+  final String backgroundPath;
+  final List<Item> items;
+
+  ui.Image? background;
+  Map<String, ui.Image> images = {};
 
   GameCanvasState get state => value;
-
-  Future loadJson() async {
-    final jsonProduct = await rootBundle.loadString('path recebido como param');
-    final jsonResponse = json.decode(jsonProduct);
-    final miniGameData = MiniGameDataModel.fromJson(jsonResponse);
-    items = miniGameData.collectibles;
-
-    //controller para carregar só o json
-  }
 
   Future loadBackground() async {
     final data = await rootBundle.load('miniGameData.background');
@@ -44,21 +36,19 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
   }
 
   Future loadImages() async {
-    List<String> imagePaths;
     final manifestContent = await rootBundle.loadString('AssetManifest.json');
     final manifestMap = json.decode(manifestContent);
-    final paths =
-        manifestMap.keys.where((String key) => key.contains('.png')).toList();
-    imagePaths = paths;
+    final paths = manifestMap.keys
+        .where((String key) => key.contains('.png'))
+        .toList() as List<String>;
 
-    for (var imagePath in imagePaths) {
+    for (var imagePath in paths) {
       final data = await rootBundle.load(imagePath);
       final bytes = data.buffer.asUint8List();
       final image = await decodeImageFromList(bytes);
       final imageName = imagePath
-          .replaceAll('assets/', '')
-          .replaceAll('cards/', '')
-          .replaceAll('items/', '')
+          .replaceAll('/', '')
+          .replaceAll(r'\b(items|cards|assets)\b', '')
           .replaceAll('.png', '');
 
       images.addAll({imageName: image});
