@@ -53,8 +53,8 @@ void main() {
 
   group('CluesControllerTests: ', () {
     setUp(() {
-      cluesController = CluesController();
-      cluesController.createClues(cluesData);
+      cluesController = CluesController(data: cluesData);
+      cluesController.createClues();
     });
 
     test('should return cluesCreatedSuccess when call createClues()', () {

@@ -20,9 +20,8 @@ void main() {
   group('TimerControllerTests: ', () {
     setUp(() {
       ticker = _MockTicker();
-      cluesController = CluesController();
-      timerController =
-          TimerController(ticker: ticker, cluesController: cluesController);
+      cluesController = CluesController(data: []);
+      timerController = TimerController(cluesController: cluesController);
       cluesController.value = const CluesStates(cluesTimeCount: 6);
 
       when(() => ticker.tick()).thenAnswer(
@@ -38,7 +37,7 @@ void main() {
     });
 
     test('should return TimerRunInProgress 5 times, the cluesTimeCount', () {
-      timerController.startTimer(0);
+      timerController.startTimer();
 
       expect(timerController.value, const TimerRunInProgress(0));
       verify(() => ticker.tick()).called(1);
@@ -47,7 +46,7 @@ void main() {
     test(
         'should return TimerRunComplete when current duration > cluesTimeCount',
         () {
-      timerController.startTimer(0);
+      timerController.startTimer();
       timerController.timerTicked(cluesController.cluesTimeCount + 1);
 
       expect(timerController.value, const TimerRunComplete());
