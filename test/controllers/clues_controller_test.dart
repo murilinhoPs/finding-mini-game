@@ -156,6 +156,16 @@ void main() {
       expect(cluesController.currentClueIndex, 0);
     });
   });
+
+  test('dasd', () {
+    var words = "I have 10 items/ and 5 cards/ and 1 assets";
+
+    var newWords = words
+        .replaceAll(RegExp(r'\b(items|cards|assets)\b'), '')
+        .replaceAll('/', '');
+
+    print(newWords);
+  });
 }
 
 // - nao esta ativa, return cluesNotAvailable;
