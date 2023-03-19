@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 
 class TimerController extends ValueNotifier<TimerState> {
   TimerController({
-    required this.ticker,
     required this.cluesController,
   }) : super(const TimerInitial(60));
-  final Ticker ticker;
   final CluesController cluesController;
 
+  final ticker = const Ticker();
   StreamSubscription<int>? tickerSubscription;
 
   @override
@@ -21,8 +20,8 @@ class TimerController extends ValueNotifier<TimerState> {
     super.dispose();
   }
 
-  void startTimer(int duration) {
-    value = TimerRunInProgress(duration);
+  void startTimer() {
+    value = const TimerRunInProgress(0);
     tickerSubscription?.cancel();
     tickerSubscription =
         ticker.tick().listen((duration) => timerTicked(duration));
@@ -40,7 +39,7 @@ class TimerController extends ValueNotifier<TimerState> {
 
   void timerReset() {
     tickerSubscription?.cancel();
-    startTimer(0);
+    startTimer();
   }
 
   void timerPaused() {

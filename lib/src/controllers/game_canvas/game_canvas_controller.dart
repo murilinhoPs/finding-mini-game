@@ -31,7 +31,7 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
   GameCanvasState get state => value;
 
   Future loadBackground() async {
-    final data = await rootBundle.load('miniGameData.background');
+    final data = await rootBundle.load(backgroundPath);
     final bytes = data.buffer.asUint8List();
     final image = await decodeImageFromList(bytes);
 

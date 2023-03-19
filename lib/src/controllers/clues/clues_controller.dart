@@ -4,7 +4,10 @@ import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:flutter/material.dart';
 
 class CluesController extends ValueNotifier<CluesStates> {
-  CluesController() : super(const CluesStates());
+  CluesController({
+    required this.data,
+  }) : super(const CluesStates());
+  final List<CluesData> data;
 
   List<Clues> get clues => value.clues;
   CluesStatus get status => value.status;
@@ -12,7 +15,7 @@ class CluesController extends ValueNotifier<CluesStates> {
   int get currentClueIndex => value.currentClueIndex;
   String? get narradorLine => value.narradorLine;
 
-  void createClues(List<CluesData> data) {
+  void createClues() {
     final createdClues = [
       ...data.map(
         (clue) => Clues(
