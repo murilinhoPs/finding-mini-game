@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MiniGameWidget(),
+      home: const MiniGameWidget(
+        backgroundPath: 'assets/backgrounds/Interior 6.png',
+        miniGameJsonpath: 'assets/jsons/interior_6.json',
+      ),
     );
   }
 }

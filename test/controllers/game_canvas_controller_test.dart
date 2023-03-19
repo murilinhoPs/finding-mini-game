@@ -1,5 +1,6 @@
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_states.dart';
+import 'package:finding_mini_game/src/controllers/game_manager/game_manager_controller.dart';
 import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/models/collectible.dart';
 import 'package:finding_mini_game/src/models/mini_game_data.dart';
@@ -11,6 +12,7 @@ import 'dart:ui' as ui;
 void main() {
   late InventoryController inventoryController;
   late GameCanvasController canvasController;
+  late GameManagerController gameManagerController;
 
   final itemWithoutContentMock = Item(
     id: 'id',
@@ -99,11 +101,14 @@ void main() {
 
   group('CanvasControllerTest: ', () {
     setUp(() {
-      inventoryController = InventoryController(
-        checkInventoryCapacity: (() {}),
+      inventoryController = InventoryController();
+      gameManagerController = GameManagerController(
+        inventoryCollectibleLenght: inventoryController.collectibles.length,
+        items: [],
       );
       canvasController = GameCanvasController(
-        inventoryController,
+        inventoryController: inventoryController,
+        gameManagerController: gameManagerController,
         backgroundPath: '',
         items: [],
       );

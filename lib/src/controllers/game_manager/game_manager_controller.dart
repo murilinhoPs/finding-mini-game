@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 class GameManagerController extends ValueNotifier<GameManagerState> {
   GameManagerController({
-    required this.inventoryController,
+    required this.inventoryCollectibleLenght,
     required this.items,
   }) : super(const GameManagerInitial());
   final List<Item> items;
-  final InventoryController inventoryController;
+  final int inventoryCollectibleLenght;
 
   int _inventoryMaxCapacity = 0;
 
@@ -24,7 +24,7 @@ class GameManagerController extends ValueNotifier<GameManagerState> {
   }
 
   void gameCompleted() {
-    if (inventoryController.collectibles.length == _inventoryMaxCapacity) {
+    if (inventoryCollectibleLenght == _inventoryMaxCapacity) {
       value = const GameManagerLevelComplete();
       return;
     }

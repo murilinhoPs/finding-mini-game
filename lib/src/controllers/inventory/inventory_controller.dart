@@ -4,10 +4,7 @@ import 'package:finding_mini_game/src/models/temporary_item.dart';
 import 'package:flutter/material.dart';
 
 class InventoryController extends ValueNotifier<InventoryState> {
-  InventoryController({
-    required this.checkInventoryCapacity,
-  }) : super(const InventoryState());
-  final VoidCallback checkInventoryCapacity;
+  InventoryController() : super(const InventoryState());
 
   InventoryStatus get status => value.status;
   List<Collectible> get collectibles => value.inventory.collectibles;
@@ -42,7 +39,6 @@ class InventoryController extends ValueNotifier<InventoryState> {
           collectibles: List.of(collectibles)..add(collectible),
         ),
       );
-      checkInventoryCapacity(); //gameManager.gameCompleted()
       return;
     }
     value = value.copyWith(

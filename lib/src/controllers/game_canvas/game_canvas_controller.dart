@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_states.dart';
+import 'package:finding_mini_game/src/controllers/game_manager/game_manager_controller.dart';
 import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/controllers/inventory/inventory_states.dart';
 import 'package:finding_mini_game/src/models/collectible.dart';
@@ -11,13 +12,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class GameCanvasController extends ValueNotifier<GameCanvasState> {
-  GameCanvasController(
-    this.inventoryController, {
+  GameCanvasController({
     this.itemClickFeedback,
+    required this.inventoryController,
+    required this.gameManagerController,
     required this.items,
     required this.backgroundPath,
   }) : super(const GameCanvasInitial());
   final InventoryController inventoryController;
+  final GameManagerController gameManagerController;
   final VoidCallback? itemClickFeedback;
   final String backgroundPath;
   final List<Item> items;

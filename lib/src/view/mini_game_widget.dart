@@ -1,22 +1,20 @@
-import 'dart:ui' as ui;
-
 import 'package:finding_mini_game/src/controllers/clues/clues_controller.dart';
-import 'package:finding_mini_game/src/controllers/clues/clues_states.dart';
+import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
+import 'package:finding_mini_game/src/controllers/game_manager/game_manager_controller.dart';
+import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/ticker.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_states.dart';
-import 'package:finding_mini_game/src/models/mini_game_data.dart';
+import 'package:finding_mini_game/src/data/game_json_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MiniGameWidget extends StatefulWidget {
   final String backgroundPath;
   final String miniGameJsonpath;
-  final List<String>? imagesPath;
   const MiniGameWidget({
     Key? key,
     required this.backgroundPath,
-    required this.imagesPath,
     required this.miniGameJsonpath,
   }) : super(key: key);
 
@@ -25,11 +23,11 @@ class MiniGameWidget extends StatefulWidget {
 }
 
 class _MiniGameWidgetState extends State<MiniGameWidget> {
-  late Map<String, ui.Image> images;
-  late ui.Image background;
-  late MiniGameDataModel miniGame;
-
-  final CluesController cluesController = CluesController();
+  late GameJsonData gameData;
+  late GameManagerController gameManager;
+  late InventoryController inventoryController;
+  late GameCanvasController canvasController;
+  late CluesController cluesController;
   late TimerController timerController;
 
   @override
@@ -38,8 +36,20 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
+    gameData = GameJsonData(widget.miniGameJsonpath);
 
-    cluesController.value = const CluesStates(cluesTimeCount: 16);
+    inventoryController = InventoryController();
+    cluesController = CluesController();
+    gameManager = GameManagerController(
+      inventoryCollectibleLenght: inventoryController.collectibles.length,
+      items: gameData.items,
+    );
+    canvasController = GameCanvasController(
+      inventoryController: inventoryController,
+      items: gameData.items,
+      backgroundPath: widget.backgroundPath,
+      gameManagerController: gameManager,
+    );
     timerController = TimerController(
         ticker: const Ticker(), cluesController: cluesController);
     super.initState();

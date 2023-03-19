@@ -74,11 +74,9 @@ void main() {
 
   group('GameManagerControllerTest: ', () {
     setUp(() {
-      inventoryController = InventoryController(
-        checkInventoryCapacity: (() {}),
-      );
+      inventoryController = InventoryController();
       gameManagerController = GameManagerController(
-        inventoryController: inventoryController,
+        inventoryCollectibleLenght: inventoryController.collectibles.length,
         items: itemsListMock,
       );
 
