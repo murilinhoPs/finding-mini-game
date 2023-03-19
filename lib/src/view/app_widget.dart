@@ -1,4 +1,3 @@
-import 'package:finding_mini_game/finding_mini_game.dart';
 import 'package:finding_mini_game/src/controllers/clues/clues_controller.dart';
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
 import 'package:finding_mini_game/src/controllers/game_manager/game_manager_controller.dart';

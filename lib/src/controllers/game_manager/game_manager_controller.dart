@@ -1,5 +1,4 @@
 import 'package:finding_mini_game/src/controllers/game_manager/game_manager_states.dart';
-import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:flutter/material.dart';
 
