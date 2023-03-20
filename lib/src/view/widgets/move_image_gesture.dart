@@ -11,7 +11,7 @@ class MoveImageGesture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
-      // boundaryMargin: const EdgeInsets.fromLTRB(0, 82, 100, 150),
+      boundaryMargin: const EdgeInsets.fromLTRB(0, 200, 0, 210),
       scaleEnabled: false,
       child: child,
     );
