@@ -42,7 +42,8 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
     final manifestContent = await rootBundle.loadString('AssetManifest.json');
     final manifestMap = json.decode(manifestContent);
     final paths = manifestMap.keys
-        .where((String key) => key.contains('.png'))
+        .where((String key) =>
+            key.contains('.png') && !key.contains('backgrounds'))
         .toList() as List<String>;
 
     for (var imagePath in paths) {
@@ -50,8 +51,9 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
       final bytes = data.buffer.asUint8List();
       final image = await decodeImageFromList(bytes);
       final imageName = imagePath
-          .replaceAll('/', '')
-          .replaceAll(r'\b(items|cards|assets)\b', '')
+          .replaceAll('/', ' ')
+          .replaceAll(RegExp(r'(items|cards|assets)'), '')
+          .replaceAll(' ', '')
           .replaceAll('.png', '');
 
       images.addAll({imageName: image});

@@ -21,6 +21,7 @@ class MiniGameCanvas extends CustomPainter {
 
   void drawBackground(TouchyCanvas canvas, Size size) {
     final paint = Paint();
+    if (controller.background == null) return;
 
     canvas.drawImage(
       controller.background!,
@@ -31,28 +32,27 @@ class MiniGameCanvas extends CustomPainter {
   }
 
   void drawCollectibles(TouchyCanvas canvas, Size size) {
-    var paint = Paint()
-      ..color = Colors.transparent
-      ..style = PaintingStyle.fill;
+    var paint = Paint()..style = PaintingStyle.fill;
 
-    controller.items.map((colletible) {
-      if (!colletible.show) return;
+    for (var index = 0; index < controller.items.length; index++) {
+      var collectible = controller.items[index];
+      if (!collectible.show) return;
 
-      var image = controller.images[colletible.image]!;
+      var image = controller.images[collectible.image]!;
       canvas.drawImage(
         image,
         Offset(
-          colletible.x - image.width / 2,
-          colletible.y - image.height / 2,
+          collectible.x - image.width / 2,
+          collectible.y - image.height / 2,
         ),
         paint,
         onTapDown: (details) {
-          print('Tap ${colletible.image}: ${details.localPosition}');
+          print('Tap ${collectible.image}: ${details.localPosition}');
           // showAlertDialog(Collectible(items.props), context);
-          controller.onCanvasItemClick(colletible);
+          controller.onCanvasItemClick(collectible);
         },
       );
-    });
+    }
   }
 
   @override

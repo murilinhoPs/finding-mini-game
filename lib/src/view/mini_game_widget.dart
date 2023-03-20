@@ -4,9 +4,12 @@ import 'package:finding_mini_game/src/controllers/game_manager/game_manager_cont
 import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_states.dart';
 import 'package:finding_mini_game/src/data/game_json_data.dart';
+import 'package:finding_mini_game/src/view/mini_game_canvas.dart';
+import 'package:finding_mini_game/src/view/widgets/move_image_gesture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:touchable/touchable.dart';
 
 class MiniGameWidget extends StatefulWidget {
   const MiniGameWidget({
@@ -37,16 +40,51 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Mini-game'),
-        backgroundColor: Colors.white12,
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   title: const Text('Mini-game'),
+      //   backgroundColor: Colors.white12,
+      // ),
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          backgroundCanvas(),
+          Positioned(
+            top: 4,
+            left: 4,
+            child: timerDebug(),
+          ),
+        ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            timerDebug(),
-          ],
+    );
+  }
+
+  Widget backgroundCanvas() {
+    final screenSize = MediaQuery.of(context).size;
+    final canvasController = context.watch<GameCanvasController>();
+
+    if (canvasController.background == null) return const SizedBox();
+
+    return SizedBox(
+      width: screenSize.width,
+      child: MoveImageGesture(
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: SizedBox(
+            width: canvasController.background!.width.toDouble(),
+            height: canvasController.background!.height.toDouble(),
+            child: CanvasTouchDetector(
+              gesturesToOverride: const [GestureType.onTapDown],
+              builder: (context) {
+                return CustomPaint(
+                  painter: MiniGameCanvas(
+                    context: context,
+                    controller: canvasController,
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

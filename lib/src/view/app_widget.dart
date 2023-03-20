@@ -37,7 +37,9 @@ class _AppWidgetState extends State<AppWidget> {
     return FutureBuilder(
         future: gameJsonData.loadJson(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return const CircularProgressIndicator();
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
           return MultiProvider(
             providers: [
