@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const AppWidget(
-        backgroundPath: 'assets/backgrounds/Interior 6.png',
+        backgroundPath: 'assets/backgrounds/Interior6.png',
         jsonPath: 'assets/jsons/interior_6.json',
       ),
     );

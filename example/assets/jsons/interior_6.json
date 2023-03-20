@@ -2,7 +2,7 @@
     "id": "game:1-1",
     "name": "Interior 6 game",
     "nextText": 2,
-    "background": "Interior 6.png",
+    "background": "Interior6.png",
     "clues": [
         {
             "id": "1",
@@ -27,13 +27,13 @@
                 "type": "document",
                 "text": "breve descrição que pegou o mapa",
                 "name": "tesouro",
-                "image": "Treasure map (1x1)",
+                "image": "TreasureMap(1x1)",
                 "description": null,
                 "audio": null
             },
             "x": 1547.0,
             "y": 1167.0,
-            "image": "Treasure map (1x1)",
+            "image": "TreasureMap(1x1)",
             "show": true
         },
         {
@@ -43,20 +43,20 @@
                 "type": "document",
                 "text": "breve descrição que pegou o quadro",
                 "name": "quadro do marco",
-                "image": "Artwork (1x1) 1",
+                "image": "Artwork(1x1)1",
                 "description": null,
                 "audio": null
             },
             "x": 1175.0,
             "y": 625.0,
-            "image": "Artwork (1x1) 1",
+            "image": "Artwork(1x1)1",
             "show": true
         },
         {
             "id": "3",
             "x": 1399.0,
             "y": 1273.0,
-            "image": "Chest (1x1) 5",
+            "image": "Chest(1x1)5",
             "show": true,
             "setState": {
                 "chest": true
@@ -69,13 +69,13 @@
                 "type": "document",
                 "text": "breve descrição que pegou o chapéu do arqueólogo",
                 "name": "chapéu do jorge, o arqueólogo",
-                "image": "Archeologist_s hat (1x1)",
+                "image": "Archeologist_sHat(1x1)",
                 "description": "Chapéu do jorge, que era o arqueólogo da região e desapareceu... sobrando apenas seu chapéu",
                 "audio": null
             },
             "x": 337.0,
             "y": 1141.0,
-            "image": "Archeologist_s hat (1x1)",
+            "image": "Archeologist_sHat(1x1)",
             "show": true
         },
         {
@@ -88,7 +88,7 @@
                 "image": "burguers_1",
                 "description": "comida - Cura 5 de HP mas o gosto é horrível"
             },
-            "x": 29.0,
+            "x": 32.0,
             "y": 1495.0,
             "image": "burguers_1",
             "show": true
@@ -103,7 +103,7 @@
                 "image": "goggles_1",
                 "description": "armadura - +1 de armadura, instântaneamente ganha dois corações quando aprender a usar um novo item"
             },
-            "x": 2277.0,
+            "x": 2270.0,
             "y": 1057.0,
             "image": "goggles_1",
             "show": true
@@ -118,7 +118,7 @@
                 "image": "undead_arm_1",
                 "description": "wisdom - para cada ponto de esforço gasto, vire 1 coração de zumbi por 1 turno"
             },
-            "x": 2281.0,
+            "x": 2250.0,
             "y": 155.0,
             "image": "undead_arm_1",
             "show": true,
