@@ -33,6 +33,7 @@ class InventoryController extends ValueNotifier<InventoryState> {
 
   void addCollectible(Collectible collectible) {
     if (collectible.requiredState == null || requiredStateExists(collectible)) {
+      print(collectible.content.name);
       value = value.copyWith(
         status: InventoryStatus.collectibleAddSuccess,
         inventory: value.inventory.copyWith(

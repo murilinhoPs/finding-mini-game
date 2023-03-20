@@ -1,6 +1,7 @@
 import 'package:finding_mini_game/src/controllers/clues/clues_controller.dart';
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
 import 'package:finding_mini_game/src/controllers/game_manager/game_manager_controller.dart';
+import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_states.dart';
 import 'package:finding_mini_game/src/data/game_json_data.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
+import 'dart:math' as math;
 
 class MiniGameWidget extends StatefulWidget {
   const MiniGameWidget({
@@ -24,7 +26,6 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -49,10 +50,23 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
         alignment: Alignment.topCenter,
         children: [
           backgroundCanvas(),
+          Align(
+            alignment: Alignment.centerRight,
+            child: temporaryItemsInventory(),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: collectiblesInventory(),
+          ),
           Positioned(
             top: 4,
             left: 4,
             child: timerDebug(),
+          ),
+          Positioned(
+            bottom: 12,
+            right: 20,
+            child: inventoryIcons(),
           ),
         ],
       ),
@@ -67,25 +81,141 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     return SizedBox(
       width: screenSize.width,
-      child: MoveImageGesture(
-        child: FittedBox(
-          fit: BoxFit.cover,
-          child: SizedBox(
-            width: canvasController.background!.width.toDouble(),
-            height: canvasController.background!.height.toDouble(),
-            child: CanvasTouchDetector(
-              gesturesToOverride: const [GestureType.onTapDown],
-              builder: (context) {
-                return CustomPaint(
-                  painter: MiniGameCanvas(
-                    context: context,
-                    controller: canvasController,
-                  ),
-                );
-              },
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: SizedBox(
+          width: canvasController.background!.width.toDouble(),
+          height: canvasController.background!.height.toDouble(),
+          child: CanvasTouchDetector(
+            gesturesToOverride: const [GestureType.onTapDown],
+            builder: (context) {
+              return CustomPaint(
+                painter: MiniGameCanvas(
+                  context: context,
+                  controller: canvasController,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget inventoryIcons() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20, bottom: 8.0),
+          child: Icon(
+            Icons.key,
+            size: 30,
+            color: Colors.lightBlue[100],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Transform.rotate(
+            angle: math.pi / 6,
+            child: Container(
+              height: 3,
+              width: 80,
+              color: Colors.lightBlue[50],
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: Icon(
+            Icons.shopping_bag_outlined,
+            size: 30,
+            color: Colors.lightBlue[100],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget collectiblesInventory() {
+    final inventoryController = context.watch<InventoryController>();
+
+    final collectiblesList = List.generate(
+      10,
+      (index) => Container(
+        height: 50,
+        width: 50,
+        padding: const EdgeInsets.all(2.0),
+        child: Container(
+          color: Colors.blueGrey[800],
+          padding: const EdgeInsets.all(4.0),
+          child: Container(
+            padding: const EdgeInsets.all(2.0),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey[900],
+            ),
+            child: inventoryController.collectibles.length > index
+                ? RawImage(
+                    image: context
+                        .read<GameCanvasController>()
+                        .images[inventoryController.collectibles[index].image],
+                  )
+                : const SizedBox(),
+          ),
+        ),
+      ),
+    ).toList();
+
+    return Container(
+      color: Colors.blueGrey[700],
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ...collectiblesList,
+          const SizedBox(width: 70),
+        ],
+      ),
+    );
+  }
+
+  Widget temporaryItemsInventory() {
+    final inventoryController = context.watch<InventoryController>();
+
+    final collectiblesList = List.generate(
+      4,
+      (index) => Container(
+        height: 50,
+        width: 50,
+        padding: const EdgeInsets.all(2.0),
+        child: Container(
+          color: Colors.blueGrey[800],
+          padding: const EdgeInsets.all(4.0),
+          child: Container(
+            padding: const EdgeInsets.all(2.0),
+            decoration: BoxDecoration(
+              color: Colors.blueGrey[900],
+            ),
+            child: inventoryController.tempItems.length > index
+                ? RawImage(
+                    image: context
+                        .read<GameCanvasController>()
+                        .images[inventoryController.tempItems[index].image],
+                  )
+                : const SizedBox(),
+          ),
+        ),
+      ),
+    ).toList();
+
+    return Container(
+      color: Colors.blueGrey[700],
+      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 42, 8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ...collectiblesList,
+          const SizedBox(height: 50),
+        ],
       ),
     );
   }

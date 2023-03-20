@@ -68,6 +68,8 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
   }
 
   void onCanvasItemClick(Item item) {
+    print(items.indexOf(item));
+
     if (item.content == null) {
       //TODO: react -> typeOf keyItem ou collectible
       if (item.setState == null) {
@@ -80,6 +82,7 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
         image: item.image,
       );
       inventoryController.addTempItem(tempItem);
+      items.removeAt(items.indexOf(item));
       value = const GameCanvasItemCreatedSuccess();
       return;
     }
@@ -101,6 +104,7 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
       value = const GameCanvasCollectibleAddFailure();
       return;
     }
+    items.removeAt(items.indexOf(item));
     value = const GameCanvasCollectibleAddSuccess();
   }
 }
