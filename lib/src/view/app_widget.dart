@@ -45,34 +45,28 @@ class _AppWidgetState extends State<AppWidget> {
               ListenableProvider<InventoryController>(
                 create: (_) => InventoryController(),
               ),
-              ListenableProxyProvider<GameJsonData, CluesController>(
+              ListenableProvider<CluesController>(
                 create: (context) => CluesController(
                   data: context.read<GameJsonData>().cluesData,
                 ),
-                update: (_, data, __) => CluesController(data: data.cluesData),
               ),
-              ListenableProxyProvider<CluesController, TimerController>(
+              ListenableProvider<TimerController>(
                 create: (context) => TimerController(
                   cluesController: context.read<CluesController>(),
                 ),
-                update: (_, clues, __) => TimerController(
-                  cluesController: clues,
+              ),
+              ListenableProvider<GameManagerController>(
+                create: (context) => GameManagerController(
+                  inventoryCollectibleLenght:
+                      context.read<InventoryController>().collectibles.length,
+                  items: context.read<GameJsonData>().items,
                 ),
               ),
-              ListenableProxyProvider2<GameJsonData, InventoryController,
-                  GameManagerController>(
-                update: (_, gameData, inventory, __) => GameManagerController(
-                  inventoryCollectibleLenght: inventory.collectibles.length,
-                  items: gameData.items,
-                ),
-              ),
-              ListenableProxyProvider3<GameJsonData, InventoryController,
-                  GameManagerController, GameCanvasController>(
-                update: (_, gameData, inventory, gameManager, __) =>
-                    GameCanvasController(
-                  items: gameData.items,
-                  inventoryController: inventory,
-                  gameManagerController: gameManager,
+              ListenableProvider<GameCanvasController>(
+                create: (context) => GameCanvasController(
+                  items: context.read<GameJsonData>().items,
+                  inventoryController: context.read<InventoryController>(),
+                  gameManagerController: context.read<GameManagerController>(),
                   backgroundPath: widget.backgroundPath,
                 ),
               ),
