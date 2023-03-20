@@ -26,6 +26,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -47,27 +48,30 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
       //   backgroundColor: Colors.white12,
       // ),
       body: Stack(
-        alignment: Alignment.topCenter,
         children: [
-          backgroundCanvas(),
-          Align(
-            alignment: Alignment.centerRight,
-            child: temporaryItemsInventory(),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: collectiblesInventory(),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: backgroundCanvas(),
+                    ),
+                    collectiblesInventory(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 80,
+                child: itemsInventory(),
+              ),
+            ],
           ),
           Positioned(
-            top: 4,
-            left: 4,
+            top: 0,
+            left: 0,
             child: timerDebug(),
-          ),
-          Positioned(
-            bottom: 12,
-            right: 20,
-            child: inventoryIcons(),
-          ),
+          )
         ],
       ),
     );
@@ -81,21 +85,24 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     return SizedBox(
       width: screenSize.width,
+      height: screenSize.height,
       child: FittedBox(
-        fit: BoxFit.contain,
-        child: SizedBox(
-          width: canvasController.background!.width.toDouble(),
-          height: canvasController.background!.height.toDouble(),
-          child: CanvasTouchDetector(
-            gesturesToOverride: const [GestureType.onTapDown],
-            builder: (context) {
-              return CustomPaint(
-                painter: MiniGameCanvas(
-                  context: context,
-                  controller: canvasController,
-                ),
-              );
-            },
+        fit: BoxFit.cover,
+        child: MoveImageGesture(
+          child: SizedBox(
+            width: canvasController.background!.width.toDouble(),
+            height: canvasController.background!.height.toDouble(),
+            child: CanvasTouchDetector(
+              gesturesToOverride: const [GestureType.onTapDown],
+              builder: (context) {
+                return CustomPaint(
+                  painter: MiniGameCanvas(
+                    context: context,
+                    controller: canvasController,
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -106,15 +113,15 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 20, bottom: 8.0),
+          padding: const EdgeInsets.only(left: 6, bottom: 8.0),
           child: Icon(
             Icons.key,
-            size: 30,
+            // size: 30,
             color: Colors.lightBlue[100],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20.0),
+          padding: const EdgeInsets.only(left: 0.0),
           child: Transform.rotate(
             angle: math.pi / 6,
             child: Container(
@@ -125,10 +132,10 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 20),
+          padding: const EdgeInsets.only(right: 20, top: 4.0),
           child: Icon(
             Icons.shopping_bag_outlined,
-            size: 30,
+            // size: 30,
             color: Colors.lightBlue[100],
           ),
         ),
@@ -170,19 +177,16 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          ...collectiblesList,
-          const SizedBox(width: 70),
-        ],
+        children: collectiblesList,
       ),
     );
   }
 
-  Widget temporaryItemsInventory() {
+  Widget itemsInventory() {
     final inventoryController = context.watch<InventoryController>();
 
     final collectiblesList = List.generate(
-      4,
+      5,
       (index) => Container(
         height: 50,
         width: 50,
@@ -209,12 +213,21 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     return Container(
       color: Colors.blueGrey[700],
-      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 42, 8.0),
+      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          ...collectiblesList,
-          const SizedBox(height: 50),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ...collectiblesList,
+                ],
+              ),
+            ),
+          ),
+          inventoryIcons()
         ],
       ),
     );
@@ -226,6 +239,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
     final minutesStr =
         ((state.duration / 60) % 60).floor().toString().padLeft(2, '0');
     final secondsStr = (state.duration % 60).floor().toString().padLeft(2, '0');
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -236,17 +250,21 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
           ),
         ],
         Text(
-          'debugTimer: $minutesStr:$secondsStr',
-          style: const TextStyle(color: Colors.white),
+          'timer: $minutesStr:$secondsStr',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 12.0,
+          ),
         ),
         SizedBox(
           height: 30,
+          width: 30,
           child: FloatingActionButton(
             backgroundColor:
                 state is TimerRunComplete ? Colors.lightGreen : Colors.red,
             child: const Icon(
               Icons.restore,
-              size: 20,
+              size: 14,
             ),
             onPressed: () => timerController.timerReset(),
           ),
