@@ -68,8 +68,6 @@ class GameCanvasController extends ValueNotifier<GameCanvasState> {
   }
 
   void onCanvasItemClick(Item item) {
-    print(items.indexOf(item));
-
     if (item.content == null) {
       //TODO: react -> typeOf keyItem ou collectible
       if (item.setState == null) {
