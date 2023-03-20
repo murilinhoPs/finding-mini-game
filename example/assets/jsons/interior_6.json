@@ -27,7 +27,7 @@
                 "type": "document",
                 "text": "breve descrição que pegou o mapa",
                 "name": "tesouro",
-                "image": "TreasureMap(1x1)",
+                "image": "TreasureMap(2x2)",
                 "description": null,
                 "audio": null
             },
@@ -88,9 +88,9 @@
                 "image": "burguers_1",
                 "description": "comida - Cura 5 de HP mas o gosto é horrível"
             },
-            "x": 32.0,
-            "y": 1495.0,
-            "image": "burguers_1",
+            "x": 50.0,
+            "y": 1470.0,
+            "image": "burguers_1xSmall",
             "show": true
         },
         {
@@ -103,9 +103,9 @@
                 "image": "goggles_1",
                 "description": "armadura - +1 de armadura, instântaneamente ganha dois corações quando aprender a usar um novo item"
             },
-            "x": 2270.0,
+            "x": 2260.0,
             "y": 1057.0,
-            "image": "goggles_1",
+            "image": "goggles_1xSmall",
             "show": true
         },
         {
@@ -118,9 +118,9 @@
                 "image": "undead_arm_1",
                 "description": "wisdom - para cada ponto de esforço gasto, vire 1 coração de zumbi por 1 turno"
             },
-            "x": 2250.0,
-            "y": 155.0,
-            "image": "undead_arm_1",
+            "x": 2270.0,
+            "y": 140.0,
+            "image": "undead_arm_1xSmall",
             "show": true,
             "requiredState": {
                 "chest": true
