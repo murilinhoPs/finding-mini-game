@@ -15,11 +15,11 @@ class MiniGameCanvas extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     var touchyCanvas = TouchyCanvas(context, canvas);
 
-    drawBackground(touchyCanvas, size);
+    drawBackground(canvas, size);
     drawCollectibles(touchyCanvas, size);
   }
 
-  void drawBackground(TouchyCanvas canvas, Size size) {
+  void drawBackground(Canvas canvas, Size size) {
     final paint = Paint();
     if (controller.background == null) return;
 
@@ -27,7 +27,6 @@ class MiniGameCanvas extends CustomPainter {
       controller.background!,
       Offset.zero,
       paint,
-      onTapDown: (details) => print('BabkgoundTap: ${details.localPosition}'),
     );
   }
 

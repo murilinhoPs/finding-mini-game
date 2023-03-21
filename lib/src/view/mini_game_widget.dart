@@ -42,14 +42,10 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: false,
-      //   title: const Text('Mini-game'),
-      //   backgroundColor: Colors.white12,
-      // ),
       body: Stack(
         children: [
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
                 child: Column(
@@ -62,16 +58,17 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                 ),
               ),
               SizedBox(
-                width: 80,
+                width: 60,
                 child: itemsInventory(),
               ),
             ],
           ),
-          Positioned(
-            top: 0,
-            left: 0,
-            child: timerDebug(),
-          )
+          SafeArea(
+            child: Align(
+              alignment: AlignmentDirectional.topStart,
+              child: timerDebug(),
+            ),
+          ),
         ],
       ),
     );
@@ -86,9 +83,9 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
     return SizedBox(
       width: screenSize.width,
       height: screenSize.height,
-      child: FittedBox(
-        fit: BoxFit.cover,
-        child: MoveImageGesture(
+      child: MoveImageGesture(
+        child: FittedBox(
+          fit: BoxFit.cover,
           child: SizedBox(
             width: canvasController.background!.width.toDouble(),
             height: canvasController.background!.height.toDouble(),
@@ -113,29 +110,27 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 6, bottom: 8.0),
+          padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
           child: Icon(
             Icons.key,
-            // size: 30,
             color: Colors.lightBlue[100],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 0.0),
+          padding: const EdgeInsets.only(right: 4.0),
           child: Transform.rotate(
             angle: math.pi / 6,
             child: Container(
               height: 3,
-              width: 80,
+              width: 60,
               color: Colors.lightBlue[50],
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 20, top: 4.0),
+          padding: const EdgeInsets.only(right: 40, top: 4.0, bottom: 8.0),
           child: Icon(
             Icons.shopping_bag_outlined,
-            // size: 30,
             color: Colors.lightBlue[100],
           ),
         ),
@@ -148,10 +143,9 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     final collectiblesList = List.generate(
       10,
-      (index) => Container(
-        height: 50,
-        width: 50,
-        padding: const EdgeInsets.all(2.0),
+      (index) => SizedBox(
+        height: 40,
+        width: 40,
         child: Container(
           color: Colors.blueGrey[800],
           padding: const EdgeInsets.all(4.0),
@@ -166,7 +160,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                         .read<GameCanvasController>()
                         .images[inventoryController.collectibles[index].image],
                   )
-                : const SizedBox(),
+                : null,
           ),
         ),
       ),
@@ -174,7 +168,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     return Container(
       color: Colors.blueGrey[700],
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 12.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: collectiblesList,
@@ -187,10 +181,9 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     final collectiblesList = List.generate(
       5,
-      (index) => Container(
-        height: 50,
-        width: 50,
-        padding: const EdgeInsets.all(2.0),
+      (index) => SizedBox(
+        height: 40,
+        width: 40,
         child: Container(
           color: Colors.blueGrey[800],
           padding: const EdgeInsets.all(4.0),
@@ -205,7 +198,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                         .read<GameCanvasController>()
                         .images[inventoryController.tempItems[index].image],
                   )
-                : const SizedBox(),
+                : null,
           ),
         ),
       ),
@@ -241,7 +234,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
     final secondsStr = (state.duration % 60).floor().toString().padLeft(2, '0');
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         if (state is TimerInitial) ...[
           ElevatedButton(

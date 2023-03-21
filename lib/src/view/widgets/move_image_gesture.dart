@@ -8,12 +8,22 @@ class MoveImageGesture extends StatelessWidget {
     required this.child,
   });
 
+  static const offsetTop = 68.0;
+  static const offsetBot = 64.0;
+
   @override
   Widget build(BuildContext context) {
-    return InteractiveViewer(
-      boundaryMargin: const EdgeInsets.fromLTRB(0, 170, 0, 170),
-      scaleEnabled: false,
-      child: child,
+    return LayoutBuilder(
+      builder: (context, constraints) => InteractiveViewer(
+        boundaryMargin: EdgeInsets.fromLTRB(
+          0,
+          constraints.maxHeight / 2 - offsetTop,
+          0,
+          constraints.maxHeight / 2 - offsetBot,
+        ),
+        scaleEnabled: false,
+        child: child,
+      ),
     );
   }
 }
