@@ -139,13 +139,14 @@ void main() {
       });
 
       test(
-          'should return collectibleAddSuccess state when calling addCollectible() and it has a requiredState that exists on keyItems and return a list with one collectible',
+          'should return itemRemoveCollectibeAddSuccess state when calling addCollectible() and it has a requiredState that exists on keyItems and return a list with one collectible',
           () {
         inventoryController.addTempItem(itemWithKeyState);
         inventoryController.addCollectible(collectibleWithStateMock);
+        print(inventoryController.status);
 
-        expect(
-            inventoryController.status, InventoryStatus.collectibleAddSuccess);
+        expect(inventoryController.status,
+            InventoryStatus.itemRemoveCollectibeAddSuccess);
         expect(inventoryController.collectibles, [collectibleWithStateMock]);
       });
     });
@@ -183,8 +184,7 @@ void main() {
       test(
           'should return itemUpdateFailure state when calling removeTempItem() and try to remove the keyItems that dont exists',
           () {
-        inventoryController.updateKeyItems(itemWithKeyState, remove: true);
-        inventoryController.removeTempItem(itemToAddMock);
+        inventoryController.removeTempItem(collectibleWithStateMock);
 
         expect(inventoryController.status, InventoryStatus.itemUpdateFailure);
         expect(inventoryController.tempItems, []);
@@ -195,10 +195,11 @@ void main() {
           () {
         inventoryController.addTempItem(itemsListMock[0]);
         inventoryController.addTempItem(itemToAddMock);
-        inventoryController.removeTempItem(itemsListMock[0]);
+        inventoryController.removeTempItem(collectibleWithStateMock);
 
-        expect(inventoryController.status, InventoryStatus.itemRemoveSuccess);
-        expect(inventoryController.tempItems, [itemToAddMock]);
+        expect(inventoryController.status,
+            InventoryStatus.itemRemoveCollectibeAddSuccess);
+        expect(inventoryController.tempItems, [itemsListMock[0]]);
       });
     });
   });

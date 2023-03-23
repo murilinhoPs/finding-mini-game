@@ -21,10 +21,22 @@ class InventoryController extends ValueNotifier<InventoryState> {
     );
   }
 
-  void removeTempItem(TemporaryItem item) {
+  void removeTempItem(Collectible collectible) {
+    if (value.inventory.tempItems.isEmpty) {
+      value = value.copyWith(
+        status: InventoryStatus.itemUpdateFailure,
+      );
+      return;
+    }
+    final collectibleKeys = collectible.requiredState!.keys.toList();
+    final item = value.inventory.tempItems.firstWhere(
+      (item) => collectibleKeys.every(
+        (state) => item.setState.keys.contains(state),
+      ),
+    );
     if (!updateKeyItems(item, remove: true)) return;
     value = value.copyWith(
-      status: InventoryStatus.itemRemoveSuccess,
+      status: InventoryStatus.itemRemoveCollectibeAddSuccess,
       inventory: value.inventory.copyWith(
         tempItems: List.of(tempItems)..remove(item),
       ),
@@ -39,6 +51,10 @@ class InventoryController extends ValueNotifier<InventoryState> {
           collectibles: List.of(collectibles)..add(collectible),
         ),
       );
+      if (requiredStateExists(collectible) &&
+          collectible.requiredState != null) {
+        removeTempItem(collectible);
+      }
       return;
     }
     value = value.copyWith(

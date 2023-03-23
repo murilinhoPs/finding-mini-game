@@ -53,14 +53,14 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                     Expanded(
                       child: backgroundCanvas(),
                     ),
-                    collectiblesInventory(),
+                    // collectiblesInventory(),
                   ],
                 ),
               ),
-              SizedBox(
-                width: 60,
-                child: itemsInventory(),
-              ),
+              // SizedBox(
+              //   width: 60,
+              //   child: itemsInventory(),
+              // ),
             ],
           ),
           SafeArea(
@@ -82,13 +82,12 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     return SizedBox(
       width: screenSize.width,
-      height: screenSize.height,
-      child: MoveImageGesture(
-        child: FittedBox(
-          fit: BoxFit.cover,
-          child: SizedBox(
-            width: canvasController.background!.width.toDouble(),
-            height: canvasController.background!.height.toDouble(),
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: canvasController.background!.width.toDouble(),
+          height: canvasController.background!.height.toDouble(),
+          child: Exp3(
             child: CanvasTouchDetector(
               gesturesToOverride: const [GestureType.onTapDown],
               builder: (context) {

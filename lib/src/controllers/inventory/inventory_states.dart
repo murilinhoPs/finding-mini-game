@@ -8,7 +8,7 @@ enum InventoryStatus {
   collectibleAddSuccess,
   collectibleAddFailure,
   itemAddSuccess,
-  itemRemoveSuccess,
+  itemRemoveCollectibeAddSuccess,
   itemUpdateFailure,
 }
 
