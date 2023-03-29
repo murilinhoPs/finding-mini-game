@@ -87,7 +87,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
         child: SizedBox(
           width: canvasController.background!.width.toDouble(),
           height: canvasController.background!.height.toDouble(),
-          child: Exp3(
+          child: MovableWidget(
             child: CanvasTouchDetector(
               gesturesToOverride: const [GestureType.onTapDown],
               builder: (context) {
