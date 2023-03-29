@@ -4,7 +4,6 @@ import 'package:finding_mini_game/src/controllers/game_manager/game_manager_cont
 import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_states.dart';
-import 'package:finding_mini_game/src/data/game_json_data.dart';
 import 'package:finding_mini_game/src/view/mini_game_canvas.dart';
 import 'package:finding_mini_game/src/view/widgets/move_image_gesture.dart';
 import 'package:flutter/material.dart';
