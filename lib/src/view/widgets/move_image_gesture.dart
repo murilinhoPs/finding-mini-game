@@ -1,4 +1,6 @@
+import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 typedef OffsetBuilder = Offset Function(Size size);
 
@@ -24,10 +26,7 @@ class _Exp3State extends State<Exp3> {
     final screenSize = MediaQuery.of(context).size;
 
     return Container(
-      // parent container
-      height: 300,
-      width: 3000, // screenSize.width,
-      color: Colors.red,
+      height: screenSize.height,
       child: GestureDetector(
         onPanUpdate: (details) {
           // get the current offset builder before we modify it
@@ -42,17 +41,16 @@ class _Exp3State extends State<Exp3> {
             // now we will return the current offset + the delta
             // Just be careful if you set canGoOffParentBounds to false, as this will prevent the widget from being painted outside the parent
             // but it WILL NOT prevent the offset from being updated to be outside parent, you should handle this in this case, see below:
-            return currentBuilder.call(containerSize * 2) + details.delta;
+            return currentBuilder.call(containerSize) + details.delta;
           };
-          setState(
-            () {},
-          ); // to update the UI (force rerender of the CustomSingleChildLayout)
+          setState(() {});
         },
         child: CustomSingleChildLayout(
           delegate: MyCustomSingleChildLayoutDelegate(
             canGoOffParentBounds: false,
             padding: EdgeInsets.zero,
             offsetBuilder: _offsetBuilder,
+            screenOffset: const Offset(0, 80),
           ),
           child: widget.child,
         ),
@@ -63,11 +61,13 @@ class _Exp3State extends State<Exp3> {
 
 class MyCustomSingleChildLayoutDelegate extends SingleChildLayoutDelegate {
   final Offset Function(Size childSize) offsetBuilder;
+  final Offset screenOffset;
   final EdgeInsets padding;
   final bool canGoOffParentBounds;
 
   MyCustomSingleChildLayoutDelegate({
     required this.offsetBuilder,
+    required this.screenOffset,
     required this.padding,
     required this.canGoOffParentBounds,
   });
@@ -83,8 +83,6 @@ class MyCustomSingleChildLayoutDelegate extends SingleChildLayoutDelegate {
   Offset getPositionForChild(Size size, Size childSize) {
     // childSize: size of the content
     Offset childTopLeft = offsetBuilder.call(childSize);
-    // print(childSize.height);
-    print('dy: ${childTopLeft.dy}');
 
     if (canGoOffParentBounds) {
       // no more checks on the position needed
@@ -93,7 +91,7 @@ class MyCustomSingleChildLayoutDelegate extends SingleChildLayoutDelegate {
 
     // make sure the child does not go off screen in all directions
     // and respects the padding
-    if (childTopLeft.dx + childSize.width > size.width - padding.right) {
+    if (childTopLeft.dx + childSize.width > (size.width - padding.right)) {
       final distance =
           -(childTopLeft.dx - (size.width - padding.right - childSize.width));
       childTopLeft = childTopLeft.translate(distance, 0);
@@ -102,17 +100,17 @@ class MyCustomSingleChildLayoutDelegate extends SingleChildLayoutDelegate {
       final distance = padding.left - childTopLeft.dx;
       childTopLeft = childTopLeft.translate(distance, 0);
     }
-
-    if (childTopLeft.dy + childSize.height > size.height - padding.bottom) {
+    if (childTopLeft.dy + childSize.height >
+        (size.height - padding.bottom) + screenOffset.dy) {
       final distance = -(childTopLeft.dy -
-          (size.height - padding.bottom - childSize.height));
+          (size.height - padding.bottom - childSize.height) -
+          screenOffset.dy);
+
       childTopLeft = childTopLeft.translate(0, distance);
     }
-    if (childTopLeft.dy < padding.top) {
-      final distance = padding.top - childTopLeft.dy;
-      //distance = - childTopLeft.dy
-      print(distance);
-      // childTopLeft = childTopLeft.translate(0, distance); ele para nessa distancia 204;
+    if (childTopLeft.dy < padding.top - screenOffset.dy) {
+      final distance = (padding.top - childTopLeft.dy) - screenOffset.dy;
+      childTopLeft = childTopLeft.translate(0, distance);
     }
     return childTopLeft;
   }

@@ -53,14 +53,14 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                     Expanded(
                       child: backgroundCanvas(),
                     ),
-                    // collectiblesInventory(),
+                    collectiblesInventory(),
                   ],
                 ),
               ),
-              // SizedBox(
-              //   width: 60,
-              //   child: itemsInventory(),
-              // ),
+              SizedBox(
+                width: 60,
+                child: itemsInventory(),
+              ),
             ],
           ),
           SafeArea(
