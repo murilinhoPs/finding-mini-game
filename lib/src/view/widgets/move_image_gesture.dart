@@ -4,10 +4,12 @@ typedef OffsetBuilder = Offset Function(Size size);
 
 class MovableWidget extends StatefulWidget {
   final Widget child;
+  final Offset screenOffset;
 
   const MovableWidget({
     Key? key,
     required this.child,
+    required this.screenOffset,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class _MovableWidgetState extends State<MovableWidget> {
           canGoOffParentBounds: false,
           padding: EdgeInsets.zero,
           offsetBuilder: _offsetBuilder,
-          screenOffset: const Offset(0, 80),
+          screenOffset: widget.screenOffset,
         ),
         child: widget.child,
       ),
