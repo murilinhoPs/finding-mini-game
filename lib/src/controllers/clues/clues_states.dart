@@ -7,8 +7,9 @@ enum CluesStatus {
   cluesAvailable,
   cluesNotAvailable,
   clueNotActive,
-  cluesShow,
+  clueShow,
   cluesHide,
+  cluesOpen,
   cluesNarradorLineShow,
   failure
 }
