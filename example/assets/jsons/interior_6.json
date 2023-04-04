@@ -13,6 +13,13 @@
         },
         {
             "id": "2",
+            "active": true,
+            "description": "Tem uma carta na parte de cima",
+            "time": 15,
+            "narradorLine": null
+        },
+        {
+            "id": "3",
             "active": false,
             "description": "Tem um objeto próximo da saída/entrada",
             "time": 30,
