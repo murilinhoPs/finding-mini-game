@@ -24,7 +24,6 @@ class _MovableWidgetState extends State<MovableWidget> {
     return GestureDetector(
       onPanUpdate: (details) {
         final currentBuilder = _offsetBuilder;
-
         _offsetBuilder = (Size containerSize) =>
             currentBuilder.call(containerSize) + details.delta;
         setState(() {});
@@ -69,25 +68,31 @@ class MovableImageSingleChildLayoutDelegate extends SingleChildLayoutDelegate {
       return childTopLeft;
     }
 
+    bool moveUpBounds = childTopLeft.dy < padding.top - screenOffset.dy;
+    bool moveDownBounds = childTopLeft.dy + childSize.height >
+        (size.height - padding.bottom) + screenOffset.dy;
+    bool moveLeftBounds = childTopLeft.dx < padding.left - screenOffset.dx;
+    bool moveRightBounds = childTopLeft.dx + childSize.width >
+        (size.width - padding.right) + screenOffset.dx;
     // make sure the child does not go off screen in all directions
     // and respects the padding
-    if (childTopLeft.dx + childSize.width > (size.width - padding.right)) {
-      final distance =
-          -(childTopLeft.dx - (size.width - padding.right - childSize.width));
+    if (moveRightBounds) {
+      final distance = -(childTopLeft.dx -
+          (size.width - padding.right - childSize.width) -
+          screenOffset.dx);
       childTopLeft = childTopLeft.translate(distance, 0);
     }
-    if (childTopLeft.dx < padding.left) {
-      final distance = padding.left - childTopLeft.dx;
+    if (moveLeftBounds) {
+      final distance = (padding.left - childTopLeft.dx) - screenOffset.dx;
       childTopLeft = childTopLeft.translate(distance, 0);
     }
-    if (childTopLeft.dy + childSize.height >
-        (size.height - padding.bottom) + screenOffset.dy) {
+    if (moveDownBounds) {
       final distance = -(childTopLeft.dy -
           (size.height - padding.bottom - childSize.height) -
           screenOffset.dy);
       childTopLeft = childTopLeft.translate(0, distance);
     }
-    if (childTopLeft.dy < padding.top - screenOffset.dy) {
+    if (moveUpBounds) {
       final distance = (padding.top - childTopLeft.dy) - screenOffset.dy;
       childTopLeft = childTopLeft.translate(0, distance);
     }
