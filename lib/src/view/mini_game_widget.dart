@@ -1,4 +1,5 @@
 import 'package:finding_mini_game/src/controllers/clues/clues_controller.dart';
+import 'package:finding_mini_game/src/controllers/clues/clues_states.dart';
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
 import 'package:finding_mini_game/src/controllers/game_manager/game_manager_controller.dart';
 import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
@@ -64,7 +65,16 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
           ),
           SafeArea(
             child: Align(
-              alignment: AlignmentDirectional.topStart,
+              alignment: AlignmentDirectional.topEnd,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 60.0),
+                child: cluesWidget(),
+              ),
+            ),
+          ),
+          SafeArea(
+            child: Align(
+              alignment: AlignmentDirectional.bottomStart,
               child: timerDebug(),
             ),
           ),
@@ -220,6 +230,42 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
             ),
           ),
           inventoryIcons()
+        ],
+      ),
+    );
+  }
+
+  Widget cluesWidget() {
+    final cluesController = context.watch<CluesController>();
+
+    return Container(
+      color: Colors.black45,
+      child: Row(
+        textDirection: TextDirection.rtl,
+        mainAxisSize: cluesController.status == CluesStatus.cluesHide
+            ? MainAxisSize.min
+            : MainAxisSize.max,
+        children: [
+          IconButton(
+            onPressed: () {
+              if (cluesController.status == CluesStatus.cluesHide) {
+                cluesController.onCluesShow();
+                return;
+              }
+              cluesController.closeClues();
+            },
+            icon: const Icon(
+              Icons.help_center,
+              color: Colors.white,
+            ),
+          ),
+          if (cluesController.status == CluesStatus.cluesOpen)
+            Text(
+              'Clues',
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            )
         ],
       ),
     );
