@@ -45,14 +45,21 @@ class CluesController extends ValueNotifier<CluesStates> {
       );
       return;
     }
-    if (status != CluesStatus.clueShow) {
+    if (status == CluesStatus.clueShow) {
+      value = value.copyWith(
+        status: CluesStatus.cluesHide,
+        currentClueIndex: clueIndex,
+      );
+      return;
+    }
+    if (currentClue.active && currentClue.narradorLine == null) {
       value = value.copyWith(
         status: CluesStatus.clueShow,
         currentClueIndex: clueIndex,
       );
       return;
     }
-    if (currentClue.narradorLine == null ||
+    if (currentClue.narradorLine != null &&
         narradorLine == currentClue.narradorLine) {
       value = value.copyWith(
         status: CluesStatus.cluesHide,
@@ -87,7 +94,6 @@ class CluesController extends ValueNotifier<CluesStates> {
           active: true,
         );
         value = value.copyWith(
-          status: CluesStatus.cluesAvailable,
           clues: List.of(clues)..replaceRange(index, index + 1, [updatedClue]),
         );
       }

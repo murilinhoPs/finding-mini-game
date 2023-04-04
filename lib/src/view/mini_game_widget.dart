@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
+import 'package:collection/collection.dart';
 import 'dart:math' as math;
 
 class MiniGameWidget extends StatefulWidget {
@@ -242,13 +243,15 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
       color: Colors.black45,
       child: Row(
         textDirection: TextDirection.rtl,
-        mainAxisSize: cluesController.status == CluesStatus.cluesHide
+        mainAxisSize: cluesController.status == CluesStatus.cluesHide ||
+                cluesController.status == CluesStatus.cluesCreatedSuccess
             ? MainAxisSize.min
             : MainAxisSize.max,
         children: [
           IconButton(
             onPressed: () {
-              if (cluesController.status == CluesStatus.cluesHide) {
+              if (cluesController.status == CluesStatus.cluesHide ||
+                  cluesController.status == CluesStatus.cluesCreatedSuccess) {
                 cluesController.onCluesShow();
                 return;
               }
@@ -259,11 +262,45 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
               color: Colors.white,
             ),
           ),
-          if (cluesController.status == CluesStatus.cluesOpen)
-            Text(
-              'Clues',
-              style: TextStyle(
-                color: Colors.white,
+          if (cluesController.status != CluesStatus.cluesHide &&
+              cluesController.status != CluesStatus.cluesCreatedSuccess)
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(width: 10),
+                      ...cluesController.clues.mapIndexed(
+                        (index, clue) => ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: const CircleBorder(),
+                            elevation: 0.0,
+                            onSurface: Colors.grey,
+                          ),
+                          onPressed: clue.active
+                              ? () => cluesController.onClueTap(index)
+                              : null,
+                          child: Text(
+                            clue.id,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 0),
+                    ],
+                  ),
+                  if (cluesController.status == CluesStatus.clueShow ||
+                      cluesController.status ==
+                          CluesStatus.cluesNarradorLineShow)
+                    Text(
+                      cluesController
+                          .clues[cluesController.currentClueIndex].description,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                ],
               ),
             )
         ],

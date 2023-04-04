@@ -74,7 +74,6 @@ void main() {
       cluesController.checkAvailibleClue(time);
       cluesController.clues[1].copyWith(active: true);
 
-      expect(cluesController.status, CluesStatus.cluesAvailable);
       expect(cluesController.clues, cluesController.clues);
       expect(cluesController.clues[1].time, time);
     });
