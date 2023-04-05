@@ -7,6 +7,7 @@ import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_states.dart';
 import 'package:finding_mini_game/src/view/mini_game_canvas.dart';
 import 'package:finding_mini_game/src/view/widgets/move_image_gesture.dart';
+import 'package:finding_mini_game/src/view/widgets/narrador_line_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -280,7 +281,15 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                             onSurface: Colors.grey,
                           ),
                           onPressed: clue.active
-                              ? () => cluesController.onClueTap(index)
+                              ? () {
+                                  cluesController.onClueTap(index);
+                                  if (cluesController.status ==
+                                      CluesStatus.cluesNarradorLineShow) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      showNarradorLine,
+                                    );
+                                  }
+                                }
                               : null,
                           child: Text(
                             clue.id,
@@ -296,7 +305,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                     Text(
                       cluesController
                           .clues[cluesController.currentClueIndex].description,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     )
