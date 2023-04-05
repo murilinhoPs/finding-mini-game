@@ -108,7 +108,7 @@ void main() {
         expect(cluesController.status, CluesStatus.clueShow);
 
         cluesController.onClueTap(1);
-        expect(cluesController.status, CluesStatus.cluesHide);
+        expect(cluesController.status, CluesStatus.cluesClose);
         expect(cluesController.currentClueIndex, 1);
       });
 
@@ -144,7 +144,7 @@ void main() {
         expect(cluesController.status, CluesStatus.clueShow);
 
         cluesController.onClueTap(index);
-        expect(cluesController.status, CluesStatus.cluesHide);
+        expect(cluesController.status, CluesStatus.cluesClose);
         expect(cluesController.narradorLine, clues[index].narradorLine);
       });
     });

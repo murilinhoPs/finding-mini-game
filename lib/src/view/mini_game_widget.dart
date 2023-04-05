@@ -243,14 +243,14 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
       color: Colors.black45,
       child: Row(
         textDirection: TextDirection.rtl,
-        mainAxisSize: cluesController.status == CluesStatus.cluesHide ||
+        mainAxisSize: cluesController.status == CluesStatus.cluesClose ||
                 cluesController.status == CluesStatus.cluesCreatedSuccess
             ? MainAxisSize.min
             : MainAxisSize.max,
         children: [
           IconButton(
             onPressed: () {
-              if (cluesController.status == CluesStatus.cluesHide ||
+              if (cluesController.status == CluesStatus.cluesClose ||
                   cluesController.status == CluesStatus.cluesCreatedSuccess) {
                 cluesController.onCluesShow();
                 return;
@@ -262,7 +262,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
               color: Colors.white,
             ),
           ),
-          if (cluesController.status != CluesStatus.cluesHide &&
+          if (cluesController.status != CluesStatus.cluesClose &&
               cluesController.status != CluesStatus.cluesCreatedSuccess)
             Expanded(
               child: Column(

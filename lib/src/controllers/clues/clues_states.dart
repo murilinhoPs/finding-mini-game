@@ -4,14 +4,13 @@ import 'package:finding_mini_game/src/models/clue.dart';
 enum CluesStatus {
   initial,
   cluesCreatedSuccess,
-  cluesAvailable,
   cluesNotAvailable,
   clueNotActive,
   clueShow,
-  cluesHide,
+  clueHide,
+  cluesClose,
   cluesOpen,
   cluesNarradorLineShow,
-  failure
 }
 
 class CluesStates extends Equatable {
