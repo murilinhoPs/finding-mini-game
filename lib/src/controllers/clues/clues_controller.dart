@@ -15,6 +15,8 @@ class CluesController extends ValueNotifier<CluesStates> {
   int get currentClueIndex => value.currentClueIndex;
   String? get narradorLine => value.narradorLine;
 
+  int _currentIndex = -1;
+
   void createClues() {
     final createdClues = [
       ...data.map(
@@ -45,26 +47,22 @@ class CluesController extends ValueNotifier<CluesStates> {
       );
       return;
     }
-    if (status == CluesStatus.clueShow) {
+    if (status == CluesStatus.clueShow && _currentIndex == clueIndex) {
       value = value.copyWith(
         status: CluesStatus.clueHide,
         currentClueIndex: clueIndex,
       );
+      _currentIndex = clueIndex;
       return;
     }
-    if (currentClue.active && currentClue.narradorLine == null) {
+    if (currentClue.active && currentClue.narradorLine == null ||
+        currentClue.narradorLine != null &&
+            narradorLine == currentClue.narradorLine) {
       value = value.copyWith(
         status: CluesStatus.clueShow,
         currentClueIndex: clueIndex,
       );
-      return;
-    }
-    if (currentClue.narradorLine != null &&
-        narradorLine == currentClue.narradorLine) {
-      value = value.copyWith(
-        status: CluesStatus.cluesClose,
-        currentClueIndex: clueIndex,
-      );
+      _currentIndex = clueIndex;
       return;
     }
     value = value.copyWith(
@@ -72,6 +70,7 @@ class CluesController extends ValueNotifier<CluesStates> {
       narradorLine: currentClue.narradorLine,
       currentClueIndex: clueIndex,
     );
+    _currentIndex = clueIndex;
   } //TODO:if showState, o widget vai pegar a description e mostrar o valor dela + highlight clueIndex. se clicar dnv, vai sumir -> hideState
 
   void closeClues() {
