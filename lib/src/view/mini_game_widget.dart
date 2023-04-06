@@ -1,3 +1,6 @@
+import 'dart:math' as math;
+
+import 'package:collection/collection.dart';
 import 'package:finding_mini_game/src/controllers/clues/clues_controller.dart';
 import 'package:finding_mini_game/src/controllers/clues/clues_states.dart';
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
@@ -12,8 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
-import 'package:collection/collection.dart';
-import 'dart:math' as math;
 
 class MiniGameWidget extends StatefulWidget {
   const MiniGameWidget({
@@ -65,13 +66,11 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
               ),
             ],
           ),
-          SafeArea(
-            child: Align(
-              alignment: AlignmentDirectional.topEnd,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 60.0),
-                child: cluesWidget(),
-              ),
+          Align(
+            alignment: AlignmentDirectional.topEnd,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 60.0),
+              child: cluesWidget(),
             ),
           ),
           SafeArea(
@@ -242,6 +241,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     return Container(
       color: Colors.black45,
+      padding: const EdgeInsets.only(top: 12.0),
       child: Row(
         textDirection: TextDirection.rtl,
         mainAxisSize: cluesController.status == CluesStatus.cluesClose ||
