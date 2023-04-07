@@ -44,7 +44,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Colors.blueGrey[700],
       body: Stack(
         children: [
           Row(
@@ -61,24 +61,21 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                 ),
               ),
               SizedBox(
-                width: 60,
+                width: 54,
                 child: itemsInventory(),
               ),
             ],
           ),
           Align(
             alignment: AlignmentDirectional.topEnd,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 60.0),
-              child: cluesWidget(),
-            ),
+            child: cluesWidget(),
           ),
-          SafeArea(
-            child: Align(
-              alignment: AlignmentDirectional.bottomStart,
-              child: timerDebug(),
-            ),
-          ),
+          // SafeArea(
+          //   child: Align(
+          //     alignment: AlignmentDirectional.bottomStart,
+          //     child: timerDebug(),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -98,7 +95,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
           width: canvasController.background!.width.toDouble(),
           height: canvasController.background!.height.toDouble(),
           child: MovableWidget(
-            screenOffset: const Offset(0, 200),
+            screenOffset: const Offset(0, 198),
             child: CanvasTouchDetector(
               gesturesToOverride: const [GestureType.onTapDown],
               builder: (context) {
@@ -124,6 +121,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
           child: Icon(
             Icons.key,
             color: Colors.lightBlue[100],
+            size: 20.0,
           ),
         ),
         Padding(
@@ -131,8 +129,8 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
           child: Transform.rotate(
             angle: math.pi / 6,
             child: Container(
-              height: 3,
-              width: 60,
+              height: 2.4,
+              width: 40,
               color: Colors.lightBlue[50],
             ),
           ),
@@ -142,6 +140,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
           child: Icon(
             Icons.shopping_bag_outlined,
             color: Colors.lightBlue[100],
+            size: 20.0,
           ),
         ),
       ],
@@ -154,11 +153,11 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
     final collectiblesList = List.generate(
       10,
       (index) => SizedBox(
-        height: 40,
-        width: 40,
+        height: 32,
+        width: 32,
         child: Container(
           color: Colors.blueGrey[800],
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(3.2),
           child: Container(
             padding: const EdgeInsets.all(2.0),
             decoration: BoxDecoration(
@@ -178,7 +177,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     return Container(
       color: Colors.blueGrey[700],
-      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 12.0),
+      padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: collectiblesList,
@@ -192,11 +191,11 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
     final collectiblesList = List.generate(
       5,
       (index) => SizedBox(
-        height: 40,
-        width: 40,
+        height: 32,
+        width: 32,
         child: Container(
           color: Colors.blueGrey[800],
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(3.2),
           child: Container(
             padding: const EdgeInsets.all(2.0),
             decoration: BoxDecoration(
@@ -216,14 +215,15 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
     return Container(
       color: Colors.blueGrey[700],
-      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+      padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 2.0),
       child: Column(
         children: [
+          const SizedBox(height: 42),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              padding: const EdgeInsets.symmetric(vertical: 1.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ...collectiblesList,
                 ],
@@ -279,8 +279,8 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
     }
 
     return Container(
-      color: Colors.black45,
-      padding: const EdgeInsets.only(top: 8.0),
+      color: !selectedHelp ? Colors.black45 : null,
+      padding: const EdgeInsets.fromLTRB(12.0, 16.0, 2.0, 0.0),
       child: Row(
         textDirection: TextDirection.rtl,
         mainAxisSize: selectedHelp ? MainAxisSize.min : MainAxisSize.max,
@@ -305,7 +305,7 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 16),
                       ...cluesController.clues.mapIndexed(
                         (index, clue) => MaterialButton(
                           height: 28,
