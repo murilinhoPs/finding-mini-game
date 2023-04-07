@@ -239,32 +239,65 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
   Widget cluesWidget() {
     final cluesController = context.watch<CluesController>();
 
+    bool selectedHelp = cluesController.status == CluesStatus.cluesClose ||
+        cluesController.status == CluesStatus.cluesCreatedSuccess;
+
+    bool showCluesOptions = cluesController.status != CluesStatus.cluesClose &&
+        cluesController.status != CluesStatus.cluesCreatedSuccess;
+
+    bool showClueDescription = cluesController.status == CluesStatus.clueShow ||
+        cluesController.status == CluesStatus.cluesNarradorLineShow;
+
+    bool selectedClue(int index) =>
+        (cluesController.status == CluesStatus.clueShow ||
+            cluesController.status == CluesStatus.cluesNarradorLineShow) &&
+        index == cluesController.currentClueIndex;
+
+    void showNarrador() {
+      if (cluesController.status == CluesStatus.cluesNarradorLineShow) {
+        final text = cluesController.narradorLine;
+        ScaffoldMessenger.of(context).showSnackBar(
+          showNarradorLine(
+            context: context,
+            text: text ?? '',
+          ),
+        );
+      }
+    }
+
+    void clueTapCallback(int index) {
+      cluesController.onClueTap(index);
+      showNarrador();
+    }
+
+    void onCluesShowCallback() {
+      if (selectedHelp) {
+        cluesController.onCluesShow();
+        return;
+      }
+      cluesController.closeClues();
+    }
+
     return Container(
       color: Colors.black45,
-      padding: const EdgeInsets.only(top: 12.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: Row(
         textDirection: TextDirection.rtl,
-        mainAxisSize: cluesController.status == CluesStatus.cluesClose ||
-                cluesController.status == CluesStatus.cluesCreatedSuccess
-            ? MainAxisSize.min
-            : MainAxisSize.max,
+        mainAxisSize: selectedHelp ? MainAxisSize.min : MainAxisSize.max,
         children: [
           IconButton(
-            onPressed: () {
-              if (cluesController.status == CluesStatus.cluesClose ||
-                  cluesController.status == CluesStatus.cluesCreatedSuccess) {
-                cluesController.onCluesShow();
-                return;
-              }
-              cluesController.closeClues();
-            },
-            icon: const Icon(
-              Icons.help_center,
-              color: Colors.white,
+            isSelected: selectedHelp,
+            selectedIcon: Icon(
+              Icons.help_center_outlined,
+              color: Colors.lightBlue[100],
             ),
+            icon: Icon(
+              Icons.help_center,
+              color: Colors.lightBlue[100],
+            ),
+            onPressed: onCluesShowCallback,
           ),
-          if (cluesController.status != CluesStatus.cluesClose &&
-              cluesController.status != CluesStatus.cluesCreatedSuccess)
+          if (showCluesOptions)
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -274,44 +307,53 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                     children: [
                       const SizedBox(width: 10),
                       ...cluesController.clues.mapIndexed(
-                        (index, clue) => ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
-                            elevation: 0.0,
-                            onSurface: Colors.grey,
+                        (index, clue) => MaterialButton(
+                          height: 28,
+                          minWidth: 20,
+                          elevation: 0.0,
+                          disabledColor: Colors.grey[600]!.withOpacity(0.8),
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          color: selectedClue(index)
+                              ? Colors.lightBlue[100]
+                              : Colors.blueGrey,
+                          textColor: selectedClue(index)
+                              ? Colors.grey[800]
+                              : Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2,
+                            horizontal: 10,
                           ),
-                          onPressed: clue.active
-                              ? () {
-                                  cluesController.onClueTap(index);
-                                  if (cluesController.status ==
-                                      CluesStatus.cluesNarradorLineShow) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      showNarradorLine,
-                                    );
-                                  }
-                                }
-                              : null,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          onPressed:
+                              clue.active ? () => clueTapCallback(index) : null,
                           child: Text(
                             clue.id,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 12),
                           ),
                         ),
                       ),
                       const SizedBox(width: 0),
                     ],
                   ),
-                  if (cluesController.status == CluesStatus.clueShow ||
-                      cluesController.status ==
-                          CluesStatus.cluesNarradorLineShow)
-                    Text(
-                      cluesController
-                          .clues[cluesController.currentClueIndex].description,
-                      style: const TextStyle(
-                        color: Colors.white,
+                  if (showClueDescription)
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        cluesController.clues[cluesController.currentClueIndex]
+                            .description,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
                       ),
-                    )
+                    ),
                 ],
               ),
-            )
+            ),
         ],
       ),
     );
