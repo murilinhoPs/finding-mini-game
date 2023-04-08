@@ -6,16 +6,16 @@ import 'package:provider/provider.dart';
 
 class ItemsInventory extends StatefulWidget {
   const ItemsInventory({
+    required this.inventoryController,
     super.key,
   });
+  final InventoryController inventoryController;
 
   @override
   State<ItemsInventory> createState() => _ItemsInventoryState();
 }
 
 class _ItemsInventoryState extends State<ItemsInventory> {
-  late InventoryController inventoryController;
-
   List<Widget> get collectiblesList => List.generate(
         5,
         (index) => SizedBox(
@@ -29,23 +29,16 @@ class _ItemsInventoryState extends State<ItemsInventory> {
               decoration: BoxDecoration(
                 color: Colors.blueGrey[900],
               ),
-              child: inventoryController.tempItems.length > index
+              child: widget.inventoryController.tempItems.length > index
                   ? RawImage(
-                      image: context
-                          .read<GameCanvasController>()
-                          .images[inventoryController.tempItems[index].image],
+                      image: context.read<GameCanvasController>().images[
+                          widget.inventoryController.tempItems[index].image],
                     )
                   : null,
             ),
           ),
         ),
       ).toList();
-
-  @override
-  void initState() {
-    inventoryController = context.watch<InventoryController>();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

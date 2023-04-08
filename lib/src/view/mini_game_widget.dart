@@ -1,6 +1,7 @@
 import 'package:finding_mini_game/src/controllers/clues/clues_controller.dart';
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
 import 'package:finding_mini_game/src/controllers/game_manager/game_manager_controller.dart';
+import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/view/widgets/clues/clues_widget.dart';
 import 'package:finding_mini_game/src/view/widgets/game_canvas/game_canvas_widget.dart';
@@ -37,9 +38,13 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final inventoryController = context.watch<InventoryController>();
+    final canvasController = context.watch<GameCanvasController>();
+    final cluesController = context.read<CluesController>();
+
     return Scaffold(
       backgroundColor: Colors.blueGrey[700],
-      body: const Stack(
+      body: Stack(
         children: [
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -48,21 +53,27 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: GameCanvasWidget(),
+                      child: GameCanvasWidget(
+                        canvasController: canvasController,
+                      ),
                     ),
-                    CollectiblesInventory(),
+                    CollectiblesInventory(
+                      inventoryController: inventoryController,
+                    ),
                   ],
                 ),
               ),
               SizedBox(
                 width: 54,
-                child: ItemsInventory(),
+                child: ItemsInventory(
+                  inventoryController: inventoryController,
+                ),
               ),
             ],
           ),
           Align(
             alignment: AlignmentDirectional.topEnd,
-            child: CluesWidget(),
+            child: CluesWidget(cluesController: cluesController),
           ),
           // SafeArea(
           //   child: Align(

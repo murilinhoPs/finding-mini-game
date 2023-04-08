@@ -7,35 +7,29 @@ import 'package:touchable/touchable.dart';
 
 class GameCanvasWidget extends StatefulWidget {
   const GameCanvasWidget({
-    Key? key,
-  }) : super(key: key);
+    required this.canvasController,
+    super.key,
+  });
+  final GameCanvasController canvasController;
 
   @override
   State<GameCanvasWidget> createState() => _GameCanvasWidgetState();
 }
 
 class _GameCanvasWidgetState extends State<GameCanvasWidget> {
-  late GameCanvasController canvasController;
-
-  @override
-  void initState() {
-    canvasController = context.watch<GameCanvasController>();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    if (canvasController.background == null) return const SizedBox();
+    if (widget.canvasController.background == null) return const SizedBox();
 
     return SizedBox(
       width: screenSize.width,
       child: FittedBox(
         fit: BoxFit.cover,
         child: SizedBox(
-          width: canvasController.background!.width.toDouble(),
-          height: canvasController.background!.height.toDouble(),
+          width: widget.canvasController.background!.width.toDouble(),
+          height: widget.canvasController.background!.height.toDouble(),
           child: MovableWidget(
             screenOffset: const Offset(0, 198),
             child: CanvasTouchDetector(
@@ -44,7 +38,7 @@ class _GameCanvasWidgetState extends State<GameCanvasWidget> {
                 return CustomPaint(
                   painter: MiniGameCanvas(
                     context: context,
-                    controller: canvasController,
+                    controller: context.watch<GameCanvasController>(),
                   ),
                 );
               },

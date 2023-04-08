@@ -8,36 +8,38 @@ import 'package:provider/provider.dart';
 
 class CluesWidget extends StatefulWidget {
   const CluesWidget({
-    Key? key,
-  }) : super(key: key);
+    required this.cluesController,
+    super.key,
+  });
+  final CluesController cluesController;
 
   @override
   State<CluesWidget> createState() => _CluesWidgetState();
 }
 
 class _CluesWidgetState extends State<CluesWidget> {
-  late CluesController cluesController;
-
   bool get selectedHelp =>
-      cluesController.status == CluesStatus.cluesClose ||
-      cluesController.status == CluesStatus.cluesCreatedSuccess;
+      widget.cluesController.status == CluesStatus.cluesClose ||
+      widget.cluesController.status == CluesStatus.cluesCreatedSuccess;
 
   bool get showCluesOptions =>
-      cluesController.status != CluesStatus.cluesClose &&
-      cluesController.status != CluesStatus.cluesCreatedSuccess;
+      context.watch<CluesController>().status != CluesStatus.cluesClose &&
+      context.watch<CluesController>().status !=
+          CluesStatus.cluesCreatedSuccess;
 
   bool get showClueDescription =>
-      cluesController.status == CluesStatus.clueShow ||
-      cluesController.status == CluesStatus.cluesNarradorLineShow;
+      context.watch<CluesController>().status == CluesStatus.clueShow ||
+      context.watch<CluesController>().status ==
+          CluesStatus.cluesNarradorLineShow;
 
   bool selectedClue(int index) =>
-      (cluesController.status == CluesStatus.clueShow ||
-          cluesController.status == CluesStatus.cluesNarradorLineShow) &&
-      index == cluesController.currentClueIndex;
+      (widget.cluesController.status == CluesStatus.clueShow ||
+          widget.cluesController.status == CluesStatus.cluesNarradorLineShow) &&
+      index == widget.cluesController.currentClueIndex;
 
   void showNarrador() {
-    if (cluesController.status == CluesStatus.cluesNarradorLineShow) {
-      final text = cluesController.narradorLine;
+    if (widget.cluesController.status == CluesStatus.cluesNarradorLineShow) {
+      final text = widget.cluesController.narradorLine;
       ScaffoldMessenger.of(context).showSnackBar(
         showNarradorLine(
           context: context,
@@ -48,29 +50,23 @@ class _CluesWidgetState extends State<CluesWidget> {
   }
 
   void clueTapCallback(int index) {
-    cluesController.onClueTap(index);
+    widget.cluesController.onClueTap(index);
     showNarrador();
   }
 
   void onCluesShowCallback() {
     if (selectedHelp) {
-      cluesController.onCluesShow();
+      widget.cluesController.onCluesShow();
       return;
     }
-    cluesController.closeClues();
-  }
-
-  @override
-  void initState() {
-    cluesController = context.watch<CluesController>();
-    super.initState();
+    widget.cluesController.closeClues();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: !selectedHelp ? Colors.black45 : null,
-      padding: const EdgeInsets.fromLTRB(12.0, 16.0, 2.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(12.0, 16.0, 6.8, 0.0),
       child: Row(
         textDirection: TextDirection.rtl,
         mainAxisSize: selectedHelp ? MainAxisSize.min : MainAxisSize.max,
@@ -96,7 +92,7 @@ class _CluesWidgetState extends State<CluesWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       const SizedBox(width: 16),
-                      ...cluesController.clues.mapIndexed(
+                      ...widget.cluesController.clues.mapIndexed(
                         (index, clue) => MaterialButton(
                           height: 28,
                           minWidth: 20,
@@ -133,7 +129,9 @@ class _CluesWidgetState extends State<CluesWidget> {
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
-                        cluesController.clues[cluesController.currentClueIndex]
+                        widget
+                            .cluesController
+                            .clues[widget.cluesController.currentClueIndex]
                             .description,
                         style: const TextStyle(
                           color: Colors.white,
