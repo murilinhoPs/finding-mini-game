@@ -11,11 +11,13 @@ import 'package:provider/provider.dart';
 class AppWidget extends StatefulWidget {
   const AppWidget({
     Key? key,
+    this.theme,
     required this.backgroundPath,
     required this.jsonPath,
   }) : super(key: key);
   final String jsonPath;
   final String backgroundPath;
+  final ThemeData? theme;
 
   @override
   State<AppWidget> createState() => _AppWidgetState();
@@ -71,7 +73,10 @@ class _AppWidgetState extends State<AppWidget> {
                 ),
               ),
             ],
-            child: const MiniGameWidget(),
+            child: MaterialApp(
+              theme: widget.theme,
+              home: const MiniGameWidget(),
+            ),
           );
         });
   }
