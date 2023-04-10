@@ -57,7 +57,10 @@ class _ItemsInventoryState extends State<ItemsInventory> {
               ),
             ),
           ),
-          const InventoryIcons()
+          const Padding(
+            padding: EdgeInsets.only(right: 4.0),
+            child: InventoryIcons(),
+          )
         ],
       ),
     );
