@@ -57,8 +57,11 @@ class _MiniGameWidgetState extends State<MiniGameWidget> {
                         canvasController: canvasController,
                       ),
                     ),
-                    CollectiblesInventory(
-                      inventoryController: inventoryController,
+                    SizedBox(
+                      height: 54,
+                      child: CollectiblesInventory(
+                        inventoryController: inventoryController,
+                      ),
                     ),
                   ],
                 ),
