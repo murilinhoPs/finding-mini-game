@@ -1,5 +1,9 @@
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
+import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_states.dart';
+import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
+import 'package:finding_mini_game/src/view/widgets/narrador_line_snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';
 
 class MiniGameCanvas extends CustomPainter {
@@ -37,6 +41,12 @@ class MiniGameCanvas extends CustomPainter {
       var collectible = controller.items[index];
       if (!collectible.show) return;
 
+      !context
+              .read<InventoryController>()
+              .requiredStateExists(collectible.requiredState)
+          ? paint.color = Colors.black45
+          : paint.color = Colors.white;
+
       var image = controller.images[collectible.image]!;
       canvas.drawImage(
         image,
@@ -47,8 +57,17 @@ class MiniGameCanvas extends CustomPainter {
         paint,
         onTapDown: (details) {
           print('Tap ${collectible.image}: ${details.localPosition}');
-          // showAlertDialog(Collectible(items.props), context);
+
           controller.onCanvasItemClick(collectible);
+          if (controller.state is GameCanvasCollectibleAddFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              showNarradorLine(
+                context: context,
+                text:
+                    'Esse item só pode ser liberado com um outro item chave', //TODO: add to Strings file
+              ),
+            );
+          }
         },
       );
     }

@@ -23,6 +23,7 @@ class GameManagerController extends ValueNotifier<GameManagerState> {
   }
 
   void gameCompleted() {
+    //TODO: when adding the mini_game_package, implement this method
     if (inventoryCollectibleLenght == _inventoryMaxCapacity) {
       value = const GameManagerLevelComplete();
       return;
@@ -32,6 +33,7 @@ class GameManagerController extends ValueNotifier<GameManagerState> {
   }
 
   void gameExited() {
+    //TODO: when adding the mini_game_package, implement this method
     value = const GameManagerLevelExit();
   }
 }
