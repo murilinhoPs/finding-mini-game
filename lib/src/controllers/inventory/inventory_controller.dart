@@ -44,14 +44,15 @@ class InventoryController extends ValueNotifier<InventoryState> {
   }
 
   void addCollectible(Collectible collectible) {
-    if (collectible.requiredState == null || requiredStateExists(collectible)) {
+    if (collectible.requiredState == null ||
+        requiredStateExists(collectible.requiredState)) {
       value = value.copyWith(
         status: InventoryStatus.collectibleAddSuccess,
         inventory: value.inventory.copyWith(
           collectibles: List.of(collectibles)..add(collectible),
         ),
       );
-      if (requiredStateExists(collectible) &&
+      if (requiredStateExists(collectible.requiredState) &&
           collectible.requiredState != null) {
         removeTempItem(collectible);
       }
@@ -90,8 +91,8 @@ class InventoryController extends ValueNotifier<InventoryState> {
     return false;
   }
 
-  bool requiredStateExists(Collectible collectible) {
-    final requiredStateKeys = collectible.requiredState?.keys.toList() ?? [];
+  bool requiredStateExists(Map<String, bool>? collectibleState) {
+    final requiredStateKeys = collectibleState?.keys.toList() ?? [];
     return requiredStateKeys.every(
       (state) => keyItems.contains(state),
     );
