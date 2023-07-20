@@ -45,6 +45,7 @@ class _CollectiblesInventoryState extends State<CollectiblesInventory> {
       color: Colors.blueGrey[700],
       padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 8.0),
       child: Row(
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: collectiblesList,
       ),
