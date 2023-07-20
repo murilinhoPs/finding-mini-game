@@ -3,7 +3,8 @@ import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_contro
 import 'package:finding_mini_game/src/controllers/game_manager/game_manager_controller.dart';
 import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
-import 'package:finding_mini_game/src/data/game_json_data.dart';
+import 'package:finding_mini_game/src/data/game_data_repository.dart';
+import 'package:finding_mini_game/src/data/game_json_data_repository_impl.dart';
 import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:finding_mini_game/src/view/mini_game_widget.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +24,12 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  late GameJsonData gameJsonData;
+  late GameJsonDataRepositoryImpl gameJsonData;
   late Future<MiniGameDataModel> gameData;
 
   @override
   void initState() {
-    gameJsonData = GameJsonData(widget.jsonPath);
+    gameJsonData = GameJsonDataRepositoryImpl(widget.jsonPath);
     gameData = gameJsonData.loadJson();
     super.initState();
   }
@@ -44,7 +45,7 @@ class _AppWidgetState extends State<AppWidget> {
 
           return MultiProvider(
             providers: [
-              Provider<GameJsonData>(
+              Provider<GameDataRepository>(
                 create: (_) => gameJsonData,
               ),
               ListenableProvider<InventoryController>(
@@ -52,7 +53,7 @@ class _AppWidgetState extends State<AppWidget> {
               ),
               ListenableProvider<CluesController>(
                 create: (context) => CluesController(
-                  data: context.read<GameJsonData>().cluesData,
+                  data: context.read<GameDataRepository>().cluesData,
                 ),
               ),
               ListenableProvider<TimerController>(
@@ -64,12 +65,12 @@ class _AppWidgetState extends State<AppWidget> {
                 create: (context) => GameManagerController(
                   inventoryCollectibleLenght:
                       context.read<InventoryController>().collectibles.length,
-                  items: context.read<GameJsonData>().items,
+                  items: context.read<GameDataRepository>().items,
                 ),
               ),
               ListenableProvider<GameCanvasController>(
                 create: (context) => GameCanvasController(
-                  items: context.read<GameJsonData>().items,
+                  items: context.read<GameDataRepository>().items,
                   inventoryController: context.read<InventoryController>(),
                   gameManagerController: context.read<GameManagerController>(),
                   backgroundPath: widget.backgroundPath,
