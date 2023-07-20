@@ -4,6 +4,7 @@ import 'package:finding_mini_game/src/controllers/game_manager/game_manager_cont
 import 'package:finding_mini_game/src/controllers/inventory/inventory_controller.dart';
 import 'package:finding_mini_game/src/controllers/timer/timer_controller.dart';
 import 'package:finding_mini_game/src/data/game_json_data.dart';
+import 'package:finding_mini_game/src/models/mini_game_data.dart';
 import 'package:finding_mini_game/src/view/mini_game_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,17 +24,19 @@ class AppWidget extends StatefulWidget {
 
 class _AppWidgetState extends State<AppWidget> {
   late GameJsonData gameJsonData;
+  late Future<MiniGameDataModel> gameData;
 
   @override
   void initState() {
     gameJsonData = GameJsonData(widget.jsonPath);
+    gameData = gameJsonData.loadJson();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: gameJsonData.loadJson(),
+        future: gameData,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -41,7 +44,9 @@ class _AppWidgetState extends State<AppWidget> {
 
           return MultiProvider(
             providers: [
-              Provider<GameJsonData>(create: (_) => gameJsonData),
+              Provider<GameJsonData>(
+                create: (_) => gameJsonData,
+              ),
               ListenableProvider<InventoryController>(
                 create: (_) => InventoryController(),
               ),
