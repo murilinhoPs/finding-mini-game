@@ -66,6 +66,7 @@ class InventoryController extends ValueNotifier<InventoryState> {
   bool updateKeyItems(TemporaryItem item, {bool remove = false}) {
     final itemStates = item.setState.keys.toList();
     for (var i = 0; i < item.setState.length; i++) {
+      print(i);
       if (remove) {
         if (!keyItems.contains(itemStates[i])) {
           value = value.copyWith(

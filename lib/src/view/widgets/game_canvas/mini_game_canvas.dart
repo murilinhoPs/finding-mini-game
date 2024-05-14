@@ -56,7 +56,7 @@ class MiniGameCanvas extends CustomPainter {
         ),
         paint,
         onTapDown: (details) {
-          print('Tap ${collectible.image}: ${details.localPosition}');
+          //print('Tap ${collectible.image}: ${details.localPosition}');
 
           controller.onCanvasItemClick(collectible);
           if (controller.state is GameCanvasCollectibleAddFailure) {

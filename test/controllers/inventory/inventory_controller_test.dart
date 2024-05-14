@@ -143,7 +143,6 @@ void main() {
           () {
         inventoryController.addTempItem(itemWithKeyState);
         inventoryController.addCollectible(collectibleWithStateMock);
-        print(inventoryController.status);
 
         expect(inventoryController.status,
             InventoryStatus.itemRemoveCollectibeAddSuccess);

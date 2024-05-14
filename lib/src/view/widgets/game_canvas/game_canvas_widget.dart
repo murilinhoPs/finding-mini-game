@@ -1,8 +1,6 @@
 import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_controller.dart';
-import 'package:finding_mini_game/src/controllers/game_canvas/game_canvas_states.dart';
 import 'package:finding_mini_game/src/view/widgets/game_canvas/mini_game_canvas.dart';
 import 'package:finding_mini_game/src/view/widgets/move_image_gesture.dart';
-import 'package:finding_mini_game/src/view/widgets/narrador_line_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:touchable/touchable.dart';

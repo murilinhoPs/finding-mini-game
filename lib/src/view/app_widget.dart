@@ -24,7 +24,7 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  late GameJsonDataRepositoryImpl gameJsonData;
+  late GameDataRepository gameJsonData;
   late Future<MiniGameDataModel> gameData;
 
   @override

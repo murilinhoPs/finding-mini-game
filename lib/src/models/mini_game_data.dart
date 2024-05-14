@@ -2,9 +2,9 @@ class MiniGameDataModel {
   String? name;
   late String id;
   late int nextText;
-  late String background; //
+  late String background;
   late List<CluesData> clues;
-  late List<Item> collectibles; //
+  late List<Item> collectibles;
 
   MiniGameDataModel({
     this.name,
